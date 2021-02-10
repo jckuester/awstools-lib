@@ -1,13 +1,15 @@
 package terraform
 
 import (
+	"context"
 	"fmt"
-	"github.com/apex/log"
-	"github.com/jckuester/awstools-lib/aws"
 	"os"
 	"sync"
 	"time"
+
+	"github.com/apex/log"
 	"github.com/fatih/color"
+	"github.com/jckuester/awstools-lib/aws"
 	"github.com/jckuester/terradozer/pkg/provider"
 	"github.com/zclconf/go-cty/cty"
 )
@@ -20,7 +22,8 @@ type providerPoolThreadSafe struct {
 
 // NewProviderPool launches a set of Terraform AWS Providers with the configuration of the given clientKeys
 // (combination of AWS profile and region).
-func NewProviderPool(clientKeys []aws.ClientKey, version, installDir string, timeout time.Duration) (
+func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, installDir string,
+	timeout time.Duration) (
 	map[aws.ClientKey]provider.TerraformProvider, error) {
 
 	metaPlugin, err := provider.Install("aws", version, installDir)
@@ -41,6 +44,12 @@ func NewProviderPool(clientKeys []aws.ClientKey, version, installDir string, tim
 		wg.Add(len(clientKeys))
 
 		for _, clientKey := range clientKeys {
+			select {
+			case <-ctx.Done():
+				return nil, ctx.Err()
+			default:
+			}
+
 			go func(p string, r string) {
 				defer wg.Done()
 
