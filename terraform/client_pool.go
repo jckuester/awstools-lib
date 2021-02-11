@@ -53,6 +53,12 @@ func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, i
 			go func(p string, r string) {
 				defer wg.Done()
 
+				log.WithFields(log.Fields{
+					"profile": p,
+					"region":  r,
+					"time":    time.Now().Format("04:05"),
+				}).Debugf("start launching new instance of Terraform AWS Provider")
+
 				pr, err := provider.Launch(metaPlugin.Path, timeout)
 				if err != nil {
 					errors <- fmt.Errorf("failed to launch provider (%s): %s", metaPlugin.Path, err)
@@ -96,6 +102,7 @@ func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, i
 				log.WithFields(log.Fields{
 					"profile": p,
 					"region":  r,
+					"time":    time.Now().Format("04:05"),
 				}).Debugf("launched new instance of Terraform AWS Provider")
 			}(clientKey.Profile, clientKey.Region)
 		}

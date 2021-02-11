@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"os"
 	"sync"
+	"time"
+
+	"github.com/apex/log"
 
 	"github.com/fatih/color"
 	awsls "github.com/jckuester/awsls/aws"
@@ -13,10 +16,10 @@ import (
 	terradozerRes "github.com/jckuester/terradozer/pkg/resource"
 )
 
-// resourcesThreadSafe is a list implementation to store resources concurrently.
-type resourcesThreadSafe struct {
+// ResourcesThreadSafe is a list implementation to store resources concurrently.
+type ResourcesThreadSafe struct {
 	sync.Mutex
-	resources []awsls.Resource
+	Resources []awsls.Resource
 }
 
 // UpdateStates fetches the Terraform state for each resource via the Terraform AWS Provider.
@@ -24,13 +27,14 @@ type resourcesThreadSafe struct {
 func UpdateStates(resources []awsls.Resource, providers map[aws.ClientKey]provider.TerraformProvider) []awsls.Resource {
 	var wg sync.WaitGroup
 
-	result := &resourcesThreadSafe{
-		resources: []awsls.Resource{},
+	result := &ResourcesThreadSafe{
+		Resources: []awsls.Resource{},
 	}
 
 	sem := internal.NewSemaphore(5)
 	for i := range resources {
 		wg.Add(1)
+
 		go func(i int) {
 			defer wg.Done()
 
@@ -53,19 +57,40 @@ func UpdateStates(resources []awsls.Resource, providers map[aws.ClientKey]provid
 
 			r.UpdatableResource = terradozerRes.New(r.Type, r.ID, nil, &p)
 
+			log.WithFields(log.Fields{
+				"type":    r.Type,
+				"id":      r.ID,
+				"region":  r.Region,
+				"profile": r.Profile,
+				"time":    time.Now().Format("04:05"),
+			}).Debugf("start updating Terraform state of resource")
+
 			err := r.UpdateState()
 			if err != nil {
 				fmt.Fprint(os.Stderr, color.RedString("Error: %s\n", err))
+				return
+			}
+
+			log.WithFields(log.Fields{
+				"type":    r.Type,
+				"id":      r.ID,
+				"region":  r.Region,
+				"profile": r.Profile,
+				"time":    time.Now().Format("04:05"),
+			}).Debugf("updated Terraform state of resource")
+
+			if r.State() == nil {
+				return
 			}
 
 			// filter out resources that don't exist anymore
 			// (e.g., ECS clusters in state INACTIVE)
-			if r.State() != nil && r.State().IsNull() {
+			if r.State().IsNull() {
 				return
 			}
 
 			result.Lock()
-			result.resources = append(result.resources, *r)
+			result.Resources = append(result.Resources, *r)
 			result.Unlock()
 		}(i)
 	}
