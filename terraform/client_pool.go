@@ -90,8 +90,11 @@ func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, i
 
 				err = pr.Configure(config)
 				if err != nil {
+					pr.Close()
+
 					errors <- fmt.Errorf("failed to configure provider (name=%s, version=%s): %s",
 						metaPlugin.Name, metaPlugin.Version, err)
+
 					return
 				}
 
@@ -118,6 +121,11 @@ func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, i
 		break
 	case err := <-errors:
 		close(errors)
+
+		for _, p := range providerPool.providers {
+			_ = p.Close()
+		}
+
 		return nil, err
 	}
 
