@@ -2,13 +2,11 @@ package terraform
 
 import (
 	"fmt"
-	"os"
 	"sync"
 	"time"
 
 	"github.com/apex/log"
 
-	"github.com/fatih/color"
 	awsls "github.com/jckuester/awsls/aws"
 	"github.com/jckuester/awstools-lib/aws"
 	"github.com/jckuester/awstools-lib/internal"
@@ -20,15 +18,18 @@ import (
 type ResourcesThreadSafe struct {
 	sync.Mutex
 	Resources []awsls.Resource
+	Errors    []error
 }
 
 // UpdateStates fetches the Terraform state for each resource via the Terraform AWS Provider.
 // Returns only resources which still exist (i.e. state isn't of type cty.Nil after update).
-func UpdateStates(resources []awsls.Resource, providers map[aws.ClientKey]provider.TerraformProvider) []awsls.Resource {
+func UpdateStates(resources []awsls.Resource,
+	providers map[aws.ClientKey]provider.TerraformProvider) ([]awsls.Resource, []error) {
 	var wg sync.WaitGroup
 
 	result := &ResourcesThreadSafe{
 		Resources: []awsls.Resource{},
+		Errors:    []error{},
 	}
 
 	sem := internal.NewSemaphore(5)
@@ -62,12 +63,15 @@ func UpdateStates(resources []awsls.Resource, providers map[aws.ClientKey]provid
 				"id":      r.ID,
 				"region":  r.Region,
 				"profile": r.Profile,
-				"time":    time.Now().Format("04:05"),
+				"time":    time.Now().Format("04:05.000"),
 			}).Debugf("start updating Terraform state of resource")
 
 			err := r.UpdateState()
 			if err != nil {
-				fmt.Fprint(os.Stderr, color.RedString("Error: %s\n", err))
+				result.Lock()
+				result.Errors = append(result.Errors, err)
+				result.Unlock()
+
 				return
 			}
 
@@ -76,7 +80,7 @@ func UpdateStates(resources []awsls.Resource, providers map[aws.ClientKey]provid
 				"id":      r.ID,
 				"region":  r.Region,
 				"profile": r.Profile,
-				"time":    time.Now().Format("04:05"),
+				"time":    time.Now().Format("04:05.000"),
 			}).Debugf("updated Terraform state of resource")
 
 			if r.State() == nil {
@@ -98,5 +102,5 @@ func UpdateStates(resources []awsls.Resource, providers map[aws.ClientKey]provid
 	// Wait for all updates to complete
 	wg.Wait()
 
-	return resources
+	return result.Resources, result.Errors
 }
