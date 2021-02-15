@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/apex/log"
-
 	awsls "github.com/jckuester/awsls/aws"
 	"github.com/jckuester/awstools-lib/aws"
 	"github.com/jckuester/awstools-lib/internal"
@@ -24,7 +23,7 @@ type ResourcesThreadSafe struct {
 // UpdateStates fetches the Terraform state for each resource via the Terraform AWS Provider.
 // Returns only resources which still exist (i.e. state isn't of type cty.Nil after update).
 func UpdateStates(resources []awsls.Resource,
-	providers map[aws.ClientKey]provider.TerraformProvider) ([]awsls.Resource, []error) {
+	providers map[aws.ClientKey]provider.TerraformProvider, parallel int) ([]awsls.Resource, []error) {
 	var wg sync.WaitGroup
 
 	result := &ResourcesThreadSafe{
@@ -32,7 +31,7 @@ func UpdateStates(resources []awsls.Resource,
 		Errors:    []error{},
 	}
 
-	sem := internal.NewSemaphore(5)
+	sem := internal.NewSemaphore(parallel)
 	for i := range resources {
 		wg.Add(1)
 
