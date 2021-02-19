@@ -6,28 +6,40 @@ import (
 	"time"
 
 	"github.com/apex/log"
-	awsls "github.com/jckuester/awsls/aws"
 	"github.com/jckuester/awstools-lib/aws"
 	"github.com/jckuester/awstools-lib/internal"
 	"github.com/jckuester/terradozer/pkg/provider"
-	terradozerRes "github.com/jckuester/terradozer/pkg/resource"
+	"github.com/jckuester/terradozer/pkg/resource"
 )
+
+type Resource struct {
+	Type      string
+	ID        string
+	Region    string
+	Profile   string
+	AccountID string
+	Tags      map[string]string
+	CreatedAt *time.Time
+	resource.UpdatableResource
+}
 
 // ResourcesThreadSafe is a list implementation to store resources concurrently.
 type ResourcesThreadSafe struct {
 	sync.Mutex
-	Resources []awsls.Resource
+	Resources []Resource
 	Errors    []error
 }
 
-// UpdateStates fetches the Terraform state for each resource via the Terraform AWS Provider.
-// Returns only resources which still exist (i.e. state isn't of type cty.Nil after update).
-func UpdateStates(resources []awsls.Resource,
-	providers map[aws.ClientKey]provider.TerraformProvider, parallel int) ([]awsls.Resource, []error) {
+// UpdateStates updates the Terraform state for each resource via the Terraform AWS Provider.
+// Returns only resources for which an update was successful. Errors about failed updates are returned via []error.
+// If the existingOnly flag is true, only existing resources are returned
+// (i.e. which state isn't of type cty.Nil after update).
+func UpdateStates(resources []Resource, providers map[aws.ClientKey]provider.TerraformProvider,
+	parallel int, existingOnly bool) ([]Resource, []error) {
 	var wg sync.WaitGroup
 
 	result := &ResourcesThreadSafe{
-		Resources: []awsls.Resource{},
+		Resources: []Resource{},
 		Errors:    []error{},
 	}
 
@@ -55,7 +67,7 @@ func UpdateStates(resources []awsls.Resource,
 				panic(fmt.Sprintf("could not find Terraform AWS Provider for key: %v", key))
 			}
 
-			r.UpdatableResource = terradozerRes.New(r.Type, r.ID, nil, &p)
+			r.UpdatableResource = resource.New(r.Type, r.ID, nil, &p)
 
 			log.WithFields(log.Fields{
 				"type":    r.Type,
@@ -88,7 +100,7 @@ func UpdateStates(resources []awsls.Resource,
 
 			// filter out resources that don't exist anymore
 			// (e.g., ECS clusters in state INACTIVE)
-			if r.State().IsNull() {
+			if existingOnly && r.State().IsNull() {
 				return
 			}
 
