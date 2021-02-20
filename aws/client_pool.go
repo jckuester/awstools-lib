@@ -4,13 +4,12 @@ import (
 	"sync"
 
 	"github.com/aws/aws-sdk-go-v2/aws/external"
-	"github.com/jckuester/awsls/aws"
 )
 
 // clientPoolThreadSafe is a concurrent map implementation to store multiple AWS clients.
 type clientPoolThreadSafe struct {
 	sync.Mutex
-	clients map[ClientKey]aws.Client
+	clients map[ClientKey]Client
 }
 
 type ClientKey struct {
@@ -21,14 +20,14 @@ type ClientKey struct {
 // If profiles, regions, or both are empty, credentials and regions are picked up via the usual default provider chain,
 // respectively. For example, if regions are empty, the region is first looked for via the according region environment variable
 // or second the default region for each profile is used from `~/.aws/config`.
-func NewClientPool(profiles []string, regions []string) (map[ClientKey]aws.Client, error) {
+func NewClientPool(profiles []string, regions []string) (map[ClientKey]Client, error) {
 	errors := make(chan error)
 	wgDone := make(chan bool)
 
 	var wg sync.WaitGroup
 
 	clientPool := &clientPoolThreadSafe{
-		clients: make(map[ClientKey]aws.Client),
+		clients: make(map[ClientKey]Client),
 	}
 
 	if len(profiles) > 0 && len(regions) > 0 {
@@ -40,7 +39,7 @@ func NewClientPool(profiles []string, regions []string) (map[ClientKey]aws.Clien
 				go func(p string, r string) {
 					defer wg.Done()
 
-					client, err := aws.NewClient(
+					client, err := NewClient(
 						external.WithSharedConfigProfile(p),
 						external.WithRegion(r))
 					if err != nil {
@@ -61,7 +60,7 @@ func NewClientPool(profiles []string, regions []string) (map[ClientKey]aws.Clien
 			go func(p string) {
 				defer wg.Done()
 
-				client, err := aws.NewClient(external.WithSharedConfigProfile(p))
+				client, err := NewClient(external.WithSharedConfigProfile(p))
 				if err != nil {
 					errors <- err
 					return
@@ -79,7 +78,7 @@ func NewClientPool(profiles []string, regions []string) (map[ClientKey]aws.Clien
 			go func(r string) {
 				defer wg.Done()
 
-				client, err := aws.NewClient(external.WithRegion(r))
+				client, err := NewClient(external.WithRegion(r))
 				if err != nil {
 					errors <- err
 					return
@@ -91,12 +90,12 @@ func NewClientPool(profiles []string, regions []string) (map[ClientKey]aws.Clien
 			}(region)
 		}
 	} else {
-		client, err := aws.NewClient()
+		client, err := NewClient()
 		if err != nil {
 			return nil, err
 		}
 
-		return map[ClientKey]aws.Client{ClientKey{"", client.Region}: *client}, nil
+		return map[ClientKey]Client{ClientKey{"", client.Region}: *client}, nil
 	}
 
 	go func() {
