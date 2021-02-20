@@ -13,8 +13,13 @@ import (
 )
 
 type Resource struct {
-	Type      string
-	ID        string
+	// Type is a resource's type as defined by the Terraform AWS Provider (e.g., aws_instance).
+	Type string
+	// ID is a resource's ID as defined by the Terraform AWS Provider. Depending on the resource type, the ID can be
+	// the ARN, name (for aws_iam_role), or combined string of different attributes. The Terraform ID can differ from
+	// what AWS defines as ID and from what ID is returned via the AWS SDK.
+	ID string
+	// The AWS region where a resource lives in.
 	Region    string
 	Profile   string
 	AccountID string
