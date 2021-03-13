@@ -18,6 +18,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/apigatewaymanagementapi"
 	"github.com/aws/aws-sdk-go-v2/service/apigatewayv2"
 	"github.com/aws/aws-sdk-go-v2/service/appconfig"
+	"github.com/aws/aws-sdk-go-v2/service/appflow"
 	"github.com/aws/aws-sdk-go-v2/service/applicationautoscaling"
 	"github.com/aws/aws-sdk-go-v2/service/applicationdiscoveryservice"
 	"github.com/aws/aws-sdk-go-v2/service/applicationinsights"
@@ -25,10 +26,12 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/appstream"
 	"github.com/aws/aws-sdk-go-v2/service/appsync"
 	"github.com/aws/aws-sdk-go-v2/service/athena"
+	"github.com/aws/aws-sdk-go-v2/service/auditmanager"
 	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
 	"github.com/aws/aws-sdk-go-v2/service/autoscalingplans"
 	"github.com/aws/aws-sdk-go-v2/service/backup"
 	"github.com/aws/aws-sdk-go-v2/service/batch"
+	"github.com/aws/aws-sdk-go-v2/service/braket"
 	"github.com/aws/aws-sdk-go-v2/service/budgets"
 	"github.com/aws/aws-sdk-go-v2/service/chime"
 	"github.com/aws/aws-sdk-go-v2/service/cloud9"
@@ -61,9 +64,11 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/computeoptimizer"
 	"github.com/aws/aws-sdk-go-v2/service/configservice"
 	"github.com/aws/aws-sdk-go-v2/service/connect"
+	"github.com/aws/aws-sdk-go-v2/service/connectcontactlens"
 	"github.com/aws/aws-sdk-go-v2/service/connectparticipant"
 	"github.com/aws/aws-sdk-go-v2/service/costandusagereportservice"
 	"github.com/aws/aws-sdk-go-v2/service/costexplorer"
+	"github.com/aws/aws-sdk-go-v2/service/customerprofiles"
 	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice"
 	"github.com/aws/aws-sdk-go-v2/service/dataexchange"
 	"github.com/aws/aws-sdk-go-v2/service/datapipeline"
@@ -71,6 +76,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dax"
 	"github.com/aws/aws-sdk-go-v2/service/detective"
 	"github.com/aws/aws-sdk-go-v2/service/devicefarm"
+	"github.com/aws/aws-sdk-go-v2/service/devopsguru"
 	"github.com/aws/aws-sdk-go-v2/service/directconnect"
 	"github.com/aws/aws-sdk-go-v2/service/directoryservice"
 	"github.com/aws/aws-sdk-go-v2/service/dlm"
@@ -81,6 +87,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/aws/aws-sdk-go-v2/service/ec2instanceconnect"
 	"github.com/aws/aws-sdk-go-v2/service/ecr"
+	"github.com/aws/aws-sdk-go-v2/service/ecrpublic"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
 	"github.com/aws/aws-sdk-go-v2/service/efs"
 	"github.com/aws/aws-sdk-go-v2/service/eks"
@@ -92,11 +99,10 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/elasticsearchservice"
 	"github.com/aws/aws-sdk-go-v2/service/elastictranscoder"
 	"github.com/aws/aws-sdk-go-v2/service/emr"
+	"github.com/aws/aws-sdk-go-v2/service/emrcontainers"
 	"github.com/aws/aws-sdk-go-v2/service/eventbridge"
 	"github.com/aws/aws-sdk-go-v2/service/firehose"
 	"github.com/aws/aws-sdk-go-v2/service/fms"
-	"github.com/aws/aws-sdk-go-v2/service/forecast"
-	"github.com/aws/aws-sdk-go-v2/service/forecastquery"
 	"github.com/aws/aws-sdk-go-v2/service/frauddetector"
 	"github.com/aws/aws-sdk-go-v2/service/fsx"
 	"github.com/aws/aws-sdk-go-v2/service/gamelift"
@@ -104,11 +110,14 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/globalaccelerator"
 	"github.com/aws/aws-sdk-go-v2/service/glue"
 	"github.com/aws/aws-sdk-go-v2/service/greengrass"
+	"github.com/aws/aws-sdk-go-v2/service/greengrassv2"
 	"github.com/aws/aws-sdk-go-v2/service/groundstation"
 	"github.com/aws/aws-sdk-go-v2/service/guardduty"
 	"github.com/aws/aws-sdk-go-v2/service/health"
+	"github.com/aws/aws-sdk-go-v2/service/healthlake"
 	"github.com/aws/aws-sdk-go-v2/service/honeycode"
 	"github.com/aws/aws-sdk-go-v2/service/iam"
+	"github.com/aws/aws-sdk-go-v2/service/identitystore"
 	"github.com/aws/aws-sdk-go-v2/service/imagebuilder"
 	"github.com/aws/aws-sdk-go-v2/service/inspector"
 	"github.com/aws/aws-sdk-go-v2/service/iot"
@@ -116,12 +125,15 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/iot1clickprojects"
 	"github.com/aws/aws-sdk-go-v2/service/iotanalytics"
 	"github.com/aws/aws-sdk-go-v2/service/iotdataplane"
+	"github.com/aws/aws-sdk-go-v2/service/iotdeviceadvisor"
 	"github.com/aws/aws-sdk-go-v2/service/iotevents"
 	"github.com/aws/aws-sdk-go-v2/service/ioteventsdata"
+	"github.com/aws/aws-sdk-go-v2/service/iotfleethub"
 	"github.com/aws/aws-sdk-go-v2/service/iotjobsdataplane"
 	"github.com/aws/aws-sdk-go-v2/service/iotsecuretunneling"
 	"github.com/aws/aws-sdk-go-v2/service/iotsitewise"
 	"github.com/aws/aws-sdk-go-v2/service/iotthingsgraph"
+	"github.com/aws/aws-sdk-go-v2/service/iotwireless"
 	"github.com/aws/aws-sdk-go-v2/service/ivs"
 	"github.com/aws/aws-sdk-go-v2/service/kafka"
 	"github.com/aws/aws-sdk-go-v2/service/kendra"
@@ -131,7 +143,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/kinesisvideo"
 	"github.com/aws/aws-sdk-go-v2/service/kinesisvideoarchivedmedia"
 	"github.com/aws/aws-sdk-go-v2/service/kinesisvideomedia"
-	"github.com/aws/aws-sdk-go-v2/service/kinesisvideosignaling"
 	"github.com/aws/aws-sdk-go-v2/service/kms"
 	"github.com/aws/aws-sdk-go-v2/service/lakeformation"
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
@@ -161,6 +172,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/mq"
 	"github.com/aws/aws-sdk-go-v2/service/mturk"
 	"github.com/aws/aws-sdk-go-v2/service/neptune"
+	"github.com/aws/aws-sdk-go-v2/service/networkfirewall"
 	"github.com/aws/aws-sdk-go-v2/service/networkmanager"
 	"github.com/aws/aws-sdk-go-v2/service/opsworks"
 	"github.com/aws/aws-sdk-go-v2/service/opsworkscm"
@@ -180,7 +192,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/quicksight"
 	"github.com/aws/aws-sdk-go-v2/service/ram"
 	"github.com/aws/aws-sdk-go-v2/service/rds"
-	"github.com/aws/aws-sdk-go-v2/service/rdsdata"
 	"github.com/aws/aws-sdk-go-v2/service/redshift"
 	"github.com/aws/aws-sdk-go-v2/service/rekognition"
 	"github.com/aws/aws-sdk-go-v2/service/resourcegroups"
@@ -191,8 +202,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/route53resolver"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3control"
+	"github.com/aws/aws-sdk-go-v2/service/s3outposts"
 	"github.com/aws/aws-sdk-go-v2/service/sagemaker"
-	"github.com/aws/aws-sdk-go-v2/service/sagemakera2iruntime"
+	"github.com/aws/aws-sdk-go-v2/service/sagemakerfeaturestoreruntime"
 	"github.com/aws/aws-sdk-go-v2/service/sagemakerruntime"
 	"github.com/aws/aws-sdk-go-v2/service/savingsplans"
 	"github.com/aws/aws-sdk-go-v2/service/schemas"
@@ -213,6 +225,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	"github.com/aws/aws-sdk-go-v2/service/sso"
+	"github.com/aws/aws-sdk-go-v2/service/ssoadmin"
 	"github.com/aws/aws-sdk-go-v2/service/ssooidc"
 	"github.com/aws/aws-sdk-go-v2/service/storagegateway"
 	"github.com/aws/aws-sdk-go-v2/service/sts"
@@ -220,12 +233,14 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/swf"
 	"github.com/aws/aws-sdk-go-v2/service/synthetics"
 	"github.com/aws/aws-sdk-go-v2/service/textract"
-	"github.com/aws/aws-sdk-go-v2/service/transcribe"
+	"github.com/aws/aws-sdk-go-v2/service/timestreamquery"
+	"github.com/aws/aws-sdk-go-v2/service/timestreamwrite"
 	"github.com/aws/aws-sdk-go-v2/service/transfer"
 	"github.com/aws/aws-sdk-go-v2/service/translate"
 	"github.com/aws/aws-sdk-go-v2/service/waf"
 	"github.com/aws/aws-sdk-go-v2/service/wafregional"
 	"github.com/aws/aws-sdk-go-v2/service/wafv2"
+	"github.com/aws/aws-sdk-go-v2/service/wellarchitected"
 	"github.com/aws/aws-sdk-go-v2/service/workdocs"
 	"github.com/aws/aws-sdk-go-v2/service/worklink"
 	"github.com/aws/aws-sdk-go-v2/service/workmail"
@@ -247,6 +262,7 @@ type Client struct {
 	Apigatewaymanagementapiconn         *apigatewaymanagementapi.Client
 	Apigatewayv2conn                    *apigatewayv2.Client
 	Appconfigconn                       *appconfig.Client
+	Appflowconn                         *appflow.Client
 	Applicationautoscalingconn          *applicationautoscaling.Client
 	Applicationdiscoveryserviceconn     *applicationdiscoveryservice.Client
 	Applicationinsightsconn             *applicationinsights.Client
@@ -254,10 +270,12 @@ type Client struct {
 	Appstreamconn                       *appstream.Client
 	Appsyncconn                         *appsync.Client
 	Athenaconn                          *athena.Client
+	Auditmanagerconn                    *auditmanager.Client
 	Autoscalingconn                     *autoscaling.Client
 	Autoscalingplansconn                *autoscalingplans.Client
 	Backupconn                          *backup.Client
 	Batchconn                           *batch.Client
+	Braketconn                          *braket.Client
 	Budgetsconn                         *budgets.Client
 	Chimeconn                           *chime.Client
 	Cloud9conn                          *cloud9.Client
@@ -290,9 +308,11 @@ type Client struct {
 	Computeoptimizerconn                *computeoptimizer.Client
 	Configserviceconn                   *configservice.Client
 	Connectconn                         *connect.Client
+	Connectcontactlensconn              *connectcontactlens.Client
 	Connectparticipantconn              *connectparticipant.Client
 	Costandusagereportserviceconn       *costandusagereportservice.Client
 	Costexplorerconn                    *costexplorer.Client
+	Customerprofilesconn                *customerprofiles.Client
 	Databasemigrationserviceconn        *databasemigrationservice.Client
 	Dataexchangeconn                    *dataexchange.Client
 	Datapipelineconn                    *datapipeline.Client
@@ -300,6 +320,7 @@ type Client struct {
 	Daxconn                             *dax.Client
 	Detectiveconn                       *detective.Client
 	Devicefarmconn                      *devicefarm.Client
+	Devopsguruconn                      *devopsguru.Client
 	Directconnectconn                   *directconnect.Client
 	Directoryserviceconn                *directoryservice.Client
 	Dlmconn                             *dlm.Client
@@ -310,6 +331,7 @@ type Client struct {
 	Ec2conn                             *ec2.Client
 	Ec2instanceconnectconn              *ec2instanceconnect.Client
 	Ecrconn                             *ecr.Client
+	Ecrpublicconn                       *ecrpublic.Client
 	Ecsconn                             *ecs.Client
 	Efsconn                             *efs.Client
 	Eksconn                             *eks.Client
@@ -321,11 +343,10 @@ type Client struct {
 	Elasticsearchserviceconn            *elasticsearchservice.Client
 	Elastictranscoderconn               *elastictranscoder.Client
 	Emrconn                             *emr.Client
+	Emrcontainersconn                   *emrcontainers.Client
 	Eventbridgeconn                     *eventbridge.Client
 	Firehoseconn                        *firehose.Client
 	Fmsconn                             *fms.Client
-	Forecastconn                        *forecast.Client
-	Forecastqueryconn                   *forecastquery.Client
 	Frauddetectorconn                   *frauddetector.Client
 	Fsxconn                             *fsx.Client
 	Gameliftconn                        *gamelift.Client
@@ -333,11 +354,14 @@ type Client struct {
 	Globalacceleratorconn               *globalaccelerator.Client
 	Glueconn                            *glue.Client
 	Greengrassconn                      *greengrass.Client
+	Greengrassv2conn                    *greengrassv2.Client
 	Groundstationconn                   *groundstation.Client
 	Guarddutyconn                       *guardduty.Client
 	Healthconn                          *health.Client
+	Healthlakeconn                      *healthlake.Client
 	Honeycodeconn                       *honeycode.Client
 	Iamconn                             *iam.Client
+	Identitystoreconn                   *identitystore.Client
 	Imagebuilderconn                    *imagebuilder.Client
 	Inspectorconn                       *inspector.Client
 	Iotconn                             *iot.Client
@@ -345,12 +369,15 @@ type Client struct {
 	Iot1clickprojectsconn               *iot1clickprojects.Client
 	Iotanalyticsconn                    *iotanalytics.Client
 	Iotdataplaneconn                    *iotdataplane.Client
+	Iotdeviceadvisorconn                *iotdeviceadvisor.Client
 	Ioteventsconn                       *iotevents.Client
 	Ioteventsdataconn                   *ioteventsdata.Client
+	Iotfleethubconn                     *iotfleethub.Client
 	Iotjobsdataplaneconn                *iotjobsdataplane.Client
 	Iotsecuretunnelingconn              *iotsecuretunneling.Client
 	Iotsitewiseconn                     *iotsitewise.Client
 	Iotthingsgraphconn                  *iotthingsgraph.Client
+	Iotwirelessconn                     *iotwireless.Client
 	Ivsconn                             *ivs.Client
 	Kafkaconn                           *kafka.Client
 	Kendraconn                          *kendra.Client
@@ -360,7 +387,6 @@ type Client struct {
 	Kinesisvideoconn                    *kinesisvideo.Client
 	Kinesisvideoarchivedmediaconn       *kinesisvideoarchivedmedia.Client
 	Kinesisvideomediaconn               *kinesisvideomedia.Client
-	Kinesisvideosignalingconn           *kinesisvideosignaling.Client
 	Kmsconn                             *kms.Client
 	Lakeformationconn                   *lakeformation.Client
 	Lambdaconn                          *lambda.Client
@@ -390,6 +416,7 @@ type Client struct {
 	Mqconn                              *mq.Client
 	Mturkconn                           *mturk.Client
 	Neptuneconn                         *neptune.Client
+	Networkfirewallconn                 *networkfirewall.Client
 	Networkmanagerconn                  *networkmanager.Client
 	Opsworksconn                        *opsworks.Client
 	Opsworkscmconn                      *opsworkscm.Client
@@ -409,7 +436,6 @@ type Client struct {
 	Quicksightconn                      *quicksight.Client
 	Ramconn                             *ram.Client
 	Rdsconn                             *rds.Client
-	Rdsdataconn                         *rdsdata.Client
 	Redshiftconn                        *redshift.Client
 	Rekognitionconn                     *rekognition.Client
 	Resourcegroupsconn                  *resourcegroups.Client
@@ -420,8 +446,9 @@ type Client struct {
 	Route53resolverconn                 *route53resolver.Client
 	S3conn                              *s3.Client
 	S3controlconn                       *s3control.Client
+	S3outpostsconn                      *s3outposts.Client
 	Sagemakerconn                       *sagemaker.Client
-	Sagemakera2iruntimeconn             *sagemakera2iruntime.Client
+	Sagemakerfeaturestoreruntimeconn    *sagemakerfeaturestoreruntime.Client
 	Sagemakerruntimeconn                *sagemakerruntime.Client
 	Savingsplansconn                    *savingsplans.Client
 	Schemasconn                         *schemas.Client
@@ -442,6 +469,7 @@ type Client struct {
 	Sqsconn                             *sqs.Client
 	Ssmconn                             *ssm.Client
 	Ssoconn                             *sso.Client
+	Ssoadminconn                        *ssoadmin.Client
 	Ssooidcconn                         *ssooidc.Client
 	Storagegatewayconn                  *storagegateway.Client
 	Stsconn                             *sts.Client
@@ -449,12 +477,14 @@ type Client struct {
 	Swfconn                             *swf.Client
 	Syntheticsconn                      *synthetics.Client
 	Textractconn                        *textract.Client
-	Transcribeconn                      *transcribe.Client
+	Timestreamqueryconn                 *timestreamquery.Client
+	Timestreamwriteconn                 *timestreamwrite.Client
 	Transferconn                        *transfer.Client
 	Translateconn                       *translate.Client
 	Wafconn                             *waf.Client
 	Wafregionalconn                     *wafregional.Client
 	Wafv2conn                           *wafv2.Client
+	Wellarchitectedconn                 *wellarchitected.Client
 	Workdocsconn                        *workdocs.Client
 	Worklinkconn                        *worklink.Client
 	Workmailconn                        *workmail.Client
@@ -479,6 +509,7 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Apigatewaymanagementapiconn:         apigatewaymanagementapi.NewFromConfig(cfg),
 		Apigatewayv2conn:                    apigatewayv2.NewFromConfig(cfg),
 		Appconfigconn:                       appconfig.NewFromConfig(cfg),
+		Appflowconn:                         appflow.NewFromConfig(cfg),
 		Applicationautoscalingconn:          applicationautoscaling.NewFromConfig(cfg),
 		Applicationdiscoveryserviceconn:     applicationdiscoveryservice.NewFromConfig(cfg),
 		Applicationinsightsconn:             applicationinsights.NewFromConfig(cfg),
@@ -486,10 +517,12 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Appstreamconn:                       appstream.NewFromConfig(cfg),
 		Appsyncconn:                         appsync.NewFromConfig(cfg),
 		Athenaconn:                          athena.NewFromConfig(cfg),
+		Auditmanagerconn:                    auditmanager.NewFromConfig(cfg),
 		Autoscalingconn:                     autoscaling.NewFromConfig(cfg),
 		Autoscalingplansconn:                autoscalingplans.NewFromConfig(cfg),
 		Backupconn:                          backup.NewFromConfig(cfg),
 		Batchconn:                           batch.NewFromConfig(cfg),
+		Braketconn:                          braket.NewFromConfig(cfg),
 		Budgetsconn:                         budgets.NewFromConfig(cfg),
 		Chimeconn:                           chime.NewFromConfig(cfg),
 		Cloud9conn:                          cloud9.NewFromConfig(cfg),
@@ -522,9 +555,11 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Computeoptimizerconn:                computeoptimizer.NewFromConfig(cfg),
 		Configserviceconn:                   configservice.NewFromConfig(cfg),
 		Connectconn:                         connect.NewFromConfig(cfg),
+		Connectcontactlensconn:              connectcontactlens.NewFromConfig(cfg),
 		Connectparticipantconn:              connectparticipant.NewFromConfig(cfg),
 		Costandusagereportserviceconn:       costandusagereportservice.NewFromConfig(cfg),
 		Costexplorerconn:                    costexplorer.NewFromConfig(cfg),
+		Customerprofilesconn:                customerprofiles.NewFromConfig(cfg),
 		Databasemigrationserviceconn:        databasemigrationservice.NewFromConfig(cfg),
 		Dataexchangeconn:                    dataexchange.NewFromConfig(cfg),
 		Datapipelineconn:                    datapipeline.NewFromConfig(cfg),
@@ -532,6 +567,7 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Daxconn:                             dax.NewFromConfig(cfg),
 		Detectiveconn:                       detective.NewFromConfig(cfg),
 		Devicefarmconn:                      devicefarm.NewFromConfig(cfg),
+		Devopsguruconn:                      devopsguru.NewFromConfig(cfg),
 		Directconnectconn:                   directconnect.NewFromConfig(cfg),
 		Directoryserviceconn:                directoryservice.NewFromConfig(cfg),
 		Dlmconn:                             dlm.NewFromConfig(cfg),
@@ -542,6 +578,7 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Ec2conn:                             ec2.NewFromConfig(cfg),
 		Ec2instanceconnectconn:              ec2instanceconnect.NewFromConfig(cfg),
 		Ecrconn:                             ecr.NewFromConfig(cfg),
+		Ecrpublicconn:                       ecrpublic.NewFromConfig(cfg),
 		Ecsconn:                             ecs.NewFromConfig(cfg),
 		Efsconn:                             efs.NewFromConfig(cfg),
 		Eksconn:                             eks.NewFromConfig(cfg),
@@ -553,11 +590,10 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Elasticsearchserviceconn:            elasticsearchservice.NewFromConfig(cfg),
 		Elastictranscoderconn:               elastictranscoder.NewFromConfig(cfg),
 		Emrconn:                             emr.NewFromConfig(cfg),
+		Emrcontainersconn:                   emrcontainers.NewFromConfig(cfg),
 		Eventbridgeconn:                     eventbridge.NewFromConfig(cfg),
 		Firehoseconn:                        firehose.NewFromConfig(cfg),
 		Fmsconn:                             fms.NewFromConfig(cfg),
-		Forecastconn:                        forecast.NewFromConfig(cfg),
-		Forecastqueryconn:                   forecastquery.NewFromConfig(cfg),
 		Frauddetectorconn:                   frauddetector.NewFromConfig(cfg),
 		Fsxconn:                             fsx.NewFromConfig(cfg),
 		Gameliftconn:                        gamelift.NewFromConfig(cfg),
@@ -565,11 +601,14 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Globalacceleratorconn:               globalaccelerator.NewFromConfig(cfg),
 		Glueconn:                            glue.NewFromConfig(cfg),
 		Greengrassconn:                      greengrass.NewFromConfig(cfg),
+		Greengrassv2conn:                    greengrassv2.NewFromConfig(cfg),
 		Groundstationconn:                   groundstation.NewFromConfig(cfg),
 		Guarddutyconn:                       guardduty.NewFromConfig(cfg),
 		Healthconn:                          health.NewFromConfig(cfg),
+		Healthlakeconn:                      healthlake.NewFromConfig(cfg),
 		Honeycodeconn:                       honeycode.NewFromConfig(cfg),
 		Iamconn:                             iam.NewFromConfig(cfg),
+		Identitystoreconn:                   identitystore.NewFromConfig(cfg),
 		Imagebuilderconn:                    imagebuilder.NewFromConfig(cfg),
 		Inspectorconn:                       inspector.NewFromConfig(cfg),
 		Iotconn:                             iot.NewFromConfig(cfg),
@@ -577,12 +616,15 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Iot1clickprojectsconn:               iot1clickprojects.NewFromConfig(cfg),
 		Iotanalyticsconn:                    iotanalytics.NewFromConfig(cfg),
 		Iotdataplaneconn:                    iotdataplane.NewFromConfig(cfg),
+		Iotdeviceadvisorconn:                iotdeviceadvisor.NewFromConfig(cfg),
 		Ioteventsconn:                       iotevents.NewFromConfig(cfg),
 		Ioteventsdataconn:                   ioteventsdata.NewFromConfig(cfg),
+		Iotfleethubconn:                     iotfleethub.NewFromConfig(cfg),
 		Iotjobsdataplaneconn:                iotjobsdataplane.NewFromConfig(cfg),
 		Iotsecuretunnelingconn:              iotsecuretunneling.NewFromConfig(cfg),
 		Iotsitewiseconn:                     iotsitewise.NewFromConfig(cfg),
 		Iotthingsgraphconn:                  iotthingsgraph.NewFromConfig(cfg),
+		Iotwirelessconn:                     iotwireless.NewFromConfig(cfg),
 		Ivsconn:                             ivs.NewFromConfig(cfg),
 		Kafkaconn:                           kafka.NewFromConfig(cfg),
 		Kendraconn:                          kendra.NewFromConfig(cfg),
@@ -592,7 +634,6 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Kinesisvideoconn:                    kinesisvideo.NewFromConfig(cfg),
 		Kinesisvideoarchivedmediaconn:       kinesisvideoarchivedmedia.NewFromConfig(cfg),
 		Kinesisvideomediaconn:               kinesisvideomedia.NewFromConfig(cfg),
-		Kinesisvideosignalingconn:           kinesisvideosignaling.NewFromConfig(cfg),
 		Kmsconn:                             kms.NewFromConfig(cfg),
 		Lakeformationconn:                   lakeformation.NewFromConfig(cfg),
 		Lambdaconn:                          lambda.NewFromConfig(cfg),
@@ -622,6 +663,7 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Mqconn:                              mq.NewFromConfig(cfg),
 		Mturkconn:                           mturk.NewFromConfig(cfg),
 		Neptuneconn:                         neptune.NewFromConfig(cfg),
+		Networkfirewallconn:                 networkfirewall.NewFromConfig(cfg),
 		Networkmanagerconn:                  networkmanager.NewFromConfig(cfg),
 		Opsworksconn:                        opsworks.NewFromConfig(cfg),
 		Opsworkscmconn:                      opsworkscm.NewFromConfig(cfg),
@@ -641,7 +683,6 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Quicksightconn:                      quicksight.NewFromConfig(cfg),
 		Ramconn:                             ram.NewFromConfig(cfg),
 		Rdsconn:                             rds.NewFromConfig(cfg),
-		Rdsdataconn:                         rdsdata.NewFromConfig(cfg),
 		Redshiftconn:                        redshift.NewFromConfig(cfg),
 		Rekognitionconn:                     rekognition.NewFromConfig(cfg),
 		Resourcegroupsconn:                  resourcegroups.NewFromConfig(cfg),
@@ -652,8 +693,9 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Route53resolverconn:                 route53resolver.NewFromConfig(cfg),
 		S3conn:                              s3.NewFromConfig(cfg),
 		S3controlconn:                       s3control.NewFromConfig(cfg),
+		S3outpostsconn:                      s3outposts.NewFromConfig(cfg),
 		Sagemakerconn:                       sagemaker.NewFromConfig(cfg),
-		Sagemakera2iruntimeconn:             sagemakera2iruntime.NewFromConfig(cfg),
+		Sagemakerfeaturestoreruntimeconn:    sagemakerfeaturestoreruntime.NewFromConfig(cfg),
 		Sagemakerruntimeconn:                sagemakerruntime.NewFromConfig(cfg),
 		Savingsplansconn:                    savingsplans.NewFromConfig(cfg),
 		Schemasconn:                         schemas.NewFromConfig(cfg),
@@ -674,6 +716,7 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Sqsconn:                             sqs.NewFromConfig(cfg),
 		Ssmconn:                             ssm.NewFromConfig(cfg),
 		Ssoconn:                             sso.NewFromConfig(cfg),
+		Ssoadminconn:                        ssoadmin.NewFromConfig(cfg),
 		Ssooidcconn:                         ssooidc.NewFromConfig(cfg),
 		Storagegatewayconn:                  storagegateway.NewFromConfig(cfg),
 		Stsconn:                             sts.NewFromConfig(cfg),
@@ -681,12 +724,14 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Swfconn:                             swf.NewFromConfig(cfg),
 		Syntheticsconn:                      synthetics.NewFromConfig(cfg),
 		Textractconn:                        textract.NewFromConfig(cfg),
-		Transcribeconn:                      transcribe.NewFromConfig(cfg),
+		Timestreamqueryconn:                 timestreamquery.NewFromConfig(cfg),
+		Timestreamwriteconn:                 timestreamwrite.NewFromConfig(cfg),
 		Transferconn:                        transfer.NewFromConfig(cfg),
 		Translateconn:                       translate.NewFromConfig(cfg),
 		Wafconn:                             waf.NewFromConfig(cfg),
 		Wafregionalconn:                     wafregional.NewFromConfig(cfg),
 		Wafv2conn:                           wafv2.NewFromConfig(cfg),
+		Wellarchitectedconn:                 wellarchitected.NewFromConfig(cfg),
 		Workdocsconn:                        workdocs.NewFromConfig(cfg),
 		Worklinkconn:                        worklink.NewFromConfig(cfg),
 		Workmailconn:                        workmail.NewFromConfig(cfg),
@@ -698,7 +743,6 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 	client.Region = cfg.Region
 
 	log.WithFields(log.Fields{
-		//"profile": profile,
 		"region": cfg.Region,
 		"time":   time.Now().Format("04:05.000"),
 	}).Debugf("created new instance of AWS client")

@@ -97,7 +97,7 @@ func NewClientPool(ctx context.Context, profiles []string, regions []string) (ma
 			return nil, err
 		}
 
-		return map[ClientKey]Client{ClientKey{"", client.Region}: *client}, nil
+		return map[ClientKey]Client{{"", client.Region}: *client}, nil
 	}
 
 	go func() {

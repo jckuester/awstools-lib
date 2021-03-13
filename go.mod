@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/apex/log v1.9.0
+	github.com/aws/aws-sdk-go v1.35.28
 	github.com/aws/aws-sdk-go-v2/config v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/accessanalyzer v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/acm v1.1.1
@@ -14,6 +15,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/apigatewaymanagementapi v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/apigatewayv2 v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/appconfig v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/appflow v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/applicationautoscaling v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/applicationdiscoveryservice v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/applicationinsights v1.1.1
@@ -21,10 +23,12 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/appstream v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/appsync v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/athena v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/auditmanager v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/autoscalingplans v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/backup v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/batch v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/braket v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/budgets v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/chime v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/cloud9 v1.1.1
@@ -57,9 +61,11 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/computeoptimizer v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/configservice v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/connect v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/connectcontactlens v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/connectparticipant v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/costandusagereportservice v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/costexplorer v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/customerprofiles v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/databasemigrationservice v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/dataexchange v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/datapipeline v1.1.1
@@ -67,6 +73,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/dax v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/detective v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/devicefarm v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/devopsguru v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/directconnect v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/directoryservice v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/dlm v1.1.1
@@ -77,6 +84,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/ec2instanceconnect v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/ecr v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/ecrpublic v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/ecs v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/efs v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/eks v1.1.1
@@ -88,11 +96,10 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/elasticsearchservice v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/elastictranscoder v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/emr v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/emrcontainers v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/eventbridge v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/firehose v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/fms v1.1.1
-	github.com/aws/aws-sdk-go-v2/service/forecast v1.1.1
-	github.com/aws/aws-sdk-go-v2/service/forecastquery v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/frauddetector v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/fsx v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/gamelift v1.1.1
@@ -100,11 +107,14 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/globalaccelerator v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/glue v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/greengrass v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/greengrassv2 v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/groundstation v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/guardduty v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/health v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/healthlake v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/honeycode v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/iam v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/identitystore v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/imagebuilder v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/inspector v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/iot v1.1.1
@@ -112,12 +122,15 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/iot1clickprojects v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/iotanalytics v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/iotdataplane v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/iotdeviceadvisor v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/iotevents v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/ioteventsdata v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/iotfleethub v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/iotjobsdataplane v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/iotsecuretunneling v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/iotsitewise v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/iotthingsgraph v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/iotwireless v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/ivs v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/kafka v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/kendra v1.1.1
@@ -127,7 +140,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/kinesisvideo v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/kinesisvideoarchivedmedia v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/kinesisvideomedia v1.1.1
-	github.com/aws/aws-sdk-go-v2/service/kinesisvideosignaling v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/kms v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/lakeformation v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/lambda v1.1.1
@@ -157,6 +169,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/mq v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/mturk v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/neptune v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/networkfirewall v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/networkmanager v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/opsworks v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/opsworkscm v1.1.1
@@ -176,7 +189,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/quicksight v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/ram v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/rds v1.1.1
-	github.com/aws/aws-sdk-go-v2/service/rdsdata v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/redshift v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/rekognition v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/resourcegroups v1.1.1
@@ -187,8 +199,9 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/route53resolver v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.2.0
 	github.com/aws/aws-sdk-go-v2/service/s3control v1.2.0
+	github.com/aws/aws-sdk-go-v2/service/s3outposts v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/sagemaker v1.1.1
-	github.com/aws/aws-sdk-go-v2/service/sagemakera2iruntime v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/sagemakerfeaturestoreruntime v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/sagemakerruntime v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/savingsplans v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/schemas v1.1.1
@@ -209,6 +222,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sqs v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/sso v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/ssoadmin v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/storagegateway v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/sts v1.1.1
@@ -216,12 +230,14 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/swf v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/synthetics v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/textract v1.1.1
-	github.com/aws/aws-sdk-go-v2/service/transcribe v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/timestreamquery v1.1.2
+	github.com/aws/aws-sdk-go-v2/service/timestreamwrite v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/transfer v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/translate v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/waf v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/wafregional v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/wafv2 v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/wellarchitected v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/workdocs v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/worklink v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/workmail v1.1.1
@@ -231,6 +247,7 @@ require (
 	github.com/fatih/color v1.10.0
 	github.com/jckuester/awsls v0.8.3
 	github.com/jckuester/terradozer v0.1.3
+	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
 	github.com/zclconf/go-cty v1.7.1
 )
