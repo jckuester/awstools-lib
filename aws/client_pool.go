@@ -49,6 +49,8 @@ func NewClientPool(ctx context.Context, profiles []string, regions []string) (ma
 						return
 					}
 
+					client.Profile = p
+
 					clientPool.Lock()
 					clientPool.clients[ClientKey{p, client.Region}] = *client
 					clientPool.Unlock()
@@ -67,6 +69,8 @@ func NewClientPool(ctx context.Context, profiles []string, regions []string) (ma
 					errors <- err
 					return
 				}
+
+				client.Profile = p
 
 				clientPool.Lock()
 				clientPool.clients[ClientKey{p, client.Region}] = *client
