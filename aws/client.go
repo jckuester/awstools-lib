@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/pkg/errors"
+
 	"github.com/apex/log"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/accessanalyzer"
@@ -415,7 +417,8 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 func (client *Client) SetAccountID(ctx context.Context) error {
 	resp, err := client.Stsconn.GetCallerIdentity(ctx, &sts.GetCallerIdentityInput{})
 	if err != nil {
-		return fmt.Errorf("failed to get caller identity: %s", err)
+		fmt.Printf("%T", err.Error())
+		return errors.Wrap(err, "failed to get caller identity")
 	}
 
 	client.AccountID = *resp.Account
