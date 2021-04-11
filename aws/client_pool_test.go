@@ -1,10 +1,11 @@
 package aws_test
 
 import (
-	"github.com/jckuester/awsls/test"
-	"github.com/jckuester/awstools-lib/aws"
+	"context"
 	"testing"
 
+	"github.com/jckuester/awsls/test"
+	"github.com/jckuester/awstools-lib/aws"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -59,7 +60,7 @@ func TestNewAWSClientPool(t *testing.T) {
 			},
 		},
 		{
-			name: "no profiles and regions via flag, profile via env",
+			name: "profile via env, region via config file",
 			args: args{},
 			envs: map[string]string{
 				"AWS_CONFIG_FILE": "../test/test-fixtures/aws-config",
@@ -116,7 +117,7 @@ func TestNewAWSClientPool(t *testing.T) {
 			err = test.SetMultiEnvs(tt.envs)
 			require.NoError(t, err)
 
-			got, err := aws.NewClientPool(tt.args.profiles, tt.args.regions)
+			got, err := aws.NewClientPool(context.Background(), tt.args.profiles, tt.args.regions)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewClientPool() error = %v, wantErr %v", err, tt.wantErr)
 				return

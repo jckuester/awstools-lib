@@ -1,9 +1,10 @@
 package aws
 
 import (
+	"context"
 	"sync"
 
-	"github.com/aws/aws-sdk-go-v2/aws/external"
+	"github.com/aws/aws-sdk-go-v2/config"
 )
 
 // clientPoolThreadSafe is a concurrent map implementation to store multiple AWS clients.
@@ -20,7 +21,7 @@ type ClientKey struct {
 // If profiles, regions, or both are empty, credentials and regions are picked up via the usual default provider chain,
 // respectively. For example, if regions are empty, the region is first looked for via the according region environment variable
 // or second the default region for each profile is used from `~/.aws/config`.
-func NewClientPool(profiles []string, regions []string) (map[ClientKey]Client, error) {
+func NewClientPool(ctx context.Context, profiles []string, regions []string) (map[ClientKey]Client, error) {
 	errors := make(chan error)
 	wgDone := make(chan bool)
 
@@ -40,12 +41,15 @@ func NewClientPool(profiles []string, regions []string) (map[ClientKey]Client, e
 					defer wg.Done()
 
 					client, err := NewClient(
-						external.WithSharedConfigProfile(p),
-						external.WithRegion(r))
+						ctx,
+						config.WithSharedConfigProfile(p),
+						config.WithRegion(r))
 					if err != nil {
 						errors <- err
 						return
 					}
+
+					client.Profile = p
 
 					clientPool.Lock()
 					clientPool.clients[ClientKey{p, client.Region}] = *client
@@ -60,11 +64,13 @@ func NewClientPool(profiles []string, regions []string) (map[ClientKey]Client, e
 			go func(p string) {
 				defer wg.Done()
 
-				client, err := NewClient(external.WithSharedConfigProfile(p))
+				client, err := NewClient(ctx, config.WithSharedConfigProfile(p))
 				if err != nil {
 					errors <- err
 					return
 				}
+
+				client.Profile = p
 
 				clientPool.Lock()
 				clientPool.clients[ClientKey{p, client.Region}] = *client
@@ -78,7 +84,7 @@ func NewClientPool(profiles []string, regions []string) (map[ClientKey]Client, e
 			go func(r string) {
 				defer wg.Done()
 
-				client, err := NewClient(external.WithRegion(r))
+				client, err := NewClient(ctx, config.WithRegion(r))
 				if err != nil {
 					errors <- err
 					return
@@ -90,12 +96,12 @@ func NewClientPool(profiles []string, regions []string) (map[ClientKey]Client, e
 			}(region)
 		}
 	} else {
-		client, err := NewClient()
+		client, err := NewClient(ctx)
 		if err != nil {
 			return nil, err
 		}
 
-		return map[ClientKey]Client{ClientKey{"", client.Region}: *client}, nil
+		return map[ClientKey]Client{{"", client.Region}: *client}, nil
 	}
 
 	go func() {

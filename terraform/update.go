@@ -79,7 +79,6 @@ func UpdateStates(resources []Resource, providers map[aws.ClientKey]provider.Ter
 				"id":      r.ID,
 				"region":  r.Region,
 				"profile": r.Profile,
-				"time":    time.Now().Format("04:05.000"),
 			}).Debugf("start updating Terraform state of resource")
 
 			err := r.UpdateState()
@@ -96,7 +95,6 @@ func UpdateStates(resources []Resource, providers map[aws.ClientKey]provider.Ter
 				"id":      r.ID,
 				"region":  r.Region,
 				"profile": r.Profile,
-				"time":    time.Now().Format("04:05.000"),
 			}).Debugf("updated Terraform state of resource")
 
 			if r.State() == nil {
