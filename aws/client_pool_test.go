@@ -60,7 +60,7 @@ func TestNewAWSClientPool(t *testing.T) {
 			},
 		},
 		{
-			name: "no profiles and regions via flag, profile via env",
+			name: "profile via env, region via config file",
 			args: args{},
 			envs: map[string]string{
 				"AWS_CONFIG_FILE": "../test/test-fixtures/aws-config",

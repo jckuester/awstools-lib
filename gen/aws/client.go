@@ -5,6 +5,7 @@ package aws
 import (
 	"bytes"
 	"path/filepath"
+	"sort"
 	"strings"
 	"text/template"
 
@@ -30,6 +31,7 @@ func GenerateClient(outputPath string, services map[string]string) {
 	}
 
 	servicesUsedByTerraform = append(servicesUsedByTerraform, "sts")
+	sort.Strings(servicesUsedByTerraform)
 
 	err := util.WriteGoFile(
 		filepath.Join(outputPath, "client.go"),
@@ -65,7 +67,9 @@ var clientTmpl = template.Must(template.New("client").Funcs(
 "github.com/aws/aws-sdk-go-v2/config"
 "github.com/aws/aws-sdk-go-v2/service/sts"
 {{range .}}"github.com/aws/aws-sdk-go-v2/service/{{.}}"
-{{end}})
+{{end -}}
+"github.com/pkg/errors"
+)
 
 type Client struct {
 	AccountID string
@@ -88,7 +92,6 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 
 	log.WithFields(log.Fields{
 		"region": cfg.Region,
-		"time":   time.Now().Format("04:05.000"),
 	}).Debugf("created new instance of AWS client")
 
 	return client, nil
@@ -98,7 +101,7 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 func (client *Client) SetAccountID(ctx context.Context) error {
 	resp, err := client.Stsconn.GetCallerIdentity(ctx, &sts.GetCallerIdentityInput{})
 	if err != nil {
-		return fmt.Errorf("failed to get caller identity: %s", err)
+		return errors.Wrap(err, "failed to get caller identity")
 	}
 
 	client.AccountID = *resp.Account

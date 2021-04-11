@@ -1,6 +1,6 @@
 //+build codegen
 
-//go:generate go run -tags codegen main.go
+//go:generate go run -tags codegen generate.go
 //go:generate gofmt -s -w ../aws ../terraform
 //go:generate goimports -w ../aws ../terraform
 

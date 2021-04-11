@@ -134,6 +134,7 @@ require (
 	github.com/fatih/color v1.10.0
 	github.com/jckuester/awsls v0.8.3
 	github.com/jckuester/terradozer v0.1.3
+	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
 	github.com/zclconf/go-cty v1.7.1
 )

@@ -5,9 +5,6 @@ package aws
 import (
 	"context"
 	"fmt"
-	"time"
-
-	"github.com/pkg/errors"
 
 	"github.com/apex/log"
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -136,137 +133,138 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/worklink"
 	"github.com/aws/aws-sdk-go-v2/service/workspaces"
 	"github.com/aws/aws-sdk-go-v2/service/xray"
+	"github.com/pkg/errors"
 )
 
 type Client struct {
 	AccountID                     string
 	Region                        string
 	Profile                       string
-	Iamconn                       *iam.Client
+	Accessanalyzerconn            *accessanalyzer.Client
+	Acmconn                       *acm.Client
+	Acmpcaconn                    *acmpca.Client
 	Apigatewayconn                *apigateway.Client
 	Apigatewayv2conn              *apigatewayv2.Client
-	Elasticloadbalancingconn      *elasticloadbalancing.Client
-	Cloudfrontconn                *cloudfront.Client
-	Codecommitconn                *codecommit.Client
-	Configserviceconn             *configservice.Client
-	Efsconn                       *efs.Client
-	Sagemakerconn                 *sagemaker.Client
-	Sesconn                       *ses.Client
-	Ec2conn                       *ec2.Client
-	Wafregionalconn               *wafregional.Client
 	Applicationautoscalingconn    *applicationautoscaling.Client
-	Codebuildconn                 *codebuild.Client
-	Fmsconn                       *fms.Client
-	Glacierconn                   *glacier.Client
-	S3conn                        *s3.Client
-	Lightsailconn                 *lightsail.Client
-	Docdbconn                     *docdb.Client
-	Glueconn                      *glue.Client
-	Opsworksconn                  *opsworks.Client
-	Servicecatalogconn            *servicecatalog.Client
-	Sqsconn                       *sqs.Client
-	Appsyncconn                   *appsync.Client
-	Codepipelineconn              *codepipeline.Client
-	Elasticacheconn               *elasticache.Client
-	Imagebuilderconn              *imagebuilder.Client
-	Dlmconn                       *dlm.Client
-	Elasticbeanstalkconn          *elasticbeanstalk.Client
-	Ecrconn                       *ecr.Client
-	Ecsconn                       *ecs.Client
-	Lexmodelbuildingserviceconn   *lexmodelbuildingservice.Client
-	Autoscalingconn               *autoscaling.Client
-	Transferconn                  *transfer.Client
-	Accessanalyzerconn            *accessanalyzer.Client
-	Securityhubconn               *securityhub.Client
-	Iotconn                       *iot.Client
-	Route53resolverconn           *route53resolver.Client
-	Wafconn                       *waf.Client
 	Appmeshconn                   *appmesh.Client
-	Storagegatewayconn            *storagegateway.Client
-	Shieldconn                    *shield.Client
-	Rdsconn                       *rds.Client
-	Elasticsearchserviceconn      *elasticsearchservice.Client
-	Qldbconn                      *qldb.Client
-	Ecrpublicconn                 *ecrpublic.Client
-	Databasemigrationserviceconn  *databasemigrationservice.Client
-	Route53conn                   *route53.Client
-	Emrconn                       *emr.Client
+	Appsyncconn                   *appsync.Client
 	Athenaconn                    *athena.Client
+	Autoscalingconn               *autoscaling.Client
+	Autoscalingplansconn          *autoscalingplans.Client
+	Backupconn                    *backup.Client
 	Batchconn                     *batch.Client
+	Budgetsconn                   *budgets.Client
+	Cloud9conn                    *cloud9.Client
+	Cloudformationconn            *cloudformation.Client
+	Cloudfrontconn                *cloudfront.Client
+	Cloudhsmv2conn                *cloudhsmv2.Client
+	Cloudtrailconn                *cloudtrail.Client
+	Cloudwatchconn                *cloudwatch.Client
+	Cloudwatcheventsconn          *cloudwatchevents.Client
 	Cloudwatchlogsconn            *cloudwatchlogs.Client
+	Codeartifactconn              *codeartifact.Client
+	Codebuildconn                 *codebuild.Client
+	Codecommitconn                *codecommit.Client
 	Codedeployconn                *codedeploy.Client
-	Guarddutyconn                 *guardduty.Client
-	Pinpointconn                  *pinpoint.Client
-	Organizationsconn             *organizations.Client
+	Codepipelineconn              *codepipeline.Client
+	Codestarconnectionsconn       *codestarconnections.Client
+	Codestarnotificationsconn     *codestarnotifications.Client
+	Cognitoidentityconn           *cognitoidentity.Client
+	Cognitoidentityproviderconn   *cognitoidentityprovider.Client
+	Configserviceconn             *configservice.Client
+	Costandusagereportserviceconn *costandusagereportservice.Client
+	Databasemigrationserviceconn  *databasemigrationservice.Client
+	Datapipelineconn              *datapipeline.Client
+	Datasyncconn                  *datasync.Client
+	Daxconn                       *dax.Client
+	Devicefarmconn                *devicefarm.Client
 	Directconnectconn             *directconnect.Client
-	S3controlconn                 *s3control.Client
+	Directoryserviceconn          *directoryservice.Client
+	Dlmconn                       *dlm.Client
+	Docdbconn                     *docdb.Client
+	Dynamodbconn                  *dynamodb.Client
+	Ec2conn                       *ec2.Client
+	Ecrconn                       *ecr.Client
+	Ecrpublicconn                 *ecrpublic.Client
+	Ecsconn                       *ecs.Client
+	Efsconn                       *efs.Client
+	Eksconn                       *eks.Client
+	Elasticacheconn               *elasticache.Client
+	Elasticbeanstalkconn          *elasticbeanstalk.Client
+	Elasticloadbalancingconn      *elasticloadbalancing.Client
+	Elasticloadbalancingv2conn    *elasticloadbalancingv2.Client
+	Elasticsearchserviceconn      *elasticsearchservice.Client
+	Elastictranscoderconn         *elastictranscoder.Client
+	Emrconn                       *emr.Client
+	Firehoseconn                  *firehose.Client
+	Fmsconn                       *fms.Client
+	Fsxconn                       *fsx.Client
 	Gameliftconn                  *gamelift.Client
+	Glacierconn                   *glacier.Client
+	Globalacceleratorconn         *globalaccelerator.Client
+	Glueconn                      *glue.Client
+	Guarddutyconn                 *guardduty.Client
+	Iamconn                       *iam.Client
+	Imagebuilderconn              *imagebuilder.Client
+	Inspectorconn                 *inspector.Client
+	Iotconn                       *iot.Client
+	Kafkaconn                     *kafka.Client
+	Kinesisconn                   *kinesis.Client
+	Kinesisanalyticsconn          *kinesisanalytics.Client
+	Kinesisanalyticsv2conn        *kinesisanalyticsv2.Client
+	Kinesisvideoconn              *kinesisvideo.Client
+	Kmsconn                       *kms.Client
+	Lakeformationconn             *lakeformation.Client
+	Lambdaconn                    *lambda.Client
+	Lexmodelbuildingserviceconn   *lexmodelbuildingservice.Client
+	Licensemanagerconn            *licensemanager.Client
+	Lightsailconn                 *lightsail.Client
+	Macieconn                     *macie.Client
+	Mediaconvertconn              *mediaconvert.Client
+	Mediapackageconn              *mediapackage.Client
+	Mediastoreconn                *mediastore.Client
+	Mqconn                        *mq.Client
+	Neptuneconn                   *neptune.Client
+	Networkfirewallconn           *networkfirewall.Client
+	Opsworksconn                  *opsworks.Client
+	Organizationsconn             *organizations.Client
+	Pinpointconn                  *pinpoint.Client
+	Qldbconn                      *qldb.Client
+	Quicksightconn                *quicksight.Client
+	Ramconn                       *ram.Client
+	Rdsconn                       *rds.Client
+	Redshiftconn                  *redshift.Client
+	Resourcegroupsconn            *resourcegroups.Client
+	Route53conn                   *route53.Client
+	Route53resolverconn           *route53resolver.Client
+	S3conn                        *s3.Client
+	S3controlconn                 *s3control.Client
+	S3outpostsconn                *s3outposts.Client
+	Sagemakerconn                 *sagemaker.Client
+	Secretsmanagerconn            *secretsmanager.Client
+	Securityhubconn               *securityhub.Client
+	Servicecatalogconn            *servicecatalog.Client
+	Servicediscoveryconn          *servicediscovery.Client
+	Servicequotasconn             *servicequotas.Client
+	Sesconn                       *ses.Client
+	Sfnconn                       *sfn.Client
+	Shieldconn                    *shield.Client
+	Signerconn                    *signer.Client
+	Snsconn                       *sns.Client
+	Sqsconn                       *sqs.Client
 	Ssmconn                       *ssm.Client
 	Ssoadminconn                  *ssoadmin.Client
-	Wafv2conn                     *wafv2.Client
-	Codeartifactconn              *codeartifact.Client
-	Elasticloadbalancingv2conn    *elasticloadbalancingv2.Client
-	Networkfirewallconn           *networkfirewall.Client
-	Cloudwatcheventsconn          *cloudwatchevents.Client
-	Redshiftconn                  *redshift.Client
-	Signerconn                    *signer.Client
-	Acmpcaconn                    *acmpca.Client
-	Datapipelineconn              *datapipeline.Client
-	Syntheticsconn                *synthetics.Client
-	Workspacesconn                *workspaces.Client
-	Servicediscoveryconn          *servicediscovery.Client
-	Lambdaconn                    *lambda.Client
-	Cloudformationconn            *cloudformation.Client
-	Lakeformationconn             *lakeformation.Client
-	Kafkaconn                     *kafka.Client
-	Secretsmanagerconn            *secretsmanager.Client
-	Datasyncconn                  *datasync.Client
-	Ramconn                       *ram.Client
-	Neptuneconn                   *neptune.Client
-	Servicequotasconn             *servicequotas.Client
-	Costandusagereportserviceconn *costandusagereportservice.Client
-	Directoryserviceconn          *directoryservice.Client
-	Worklinkconn                  *worklink.Client
-	Snsconn                       *sns.Client
-	Xrayconn                      *xray.Client
-	Mediastoreconn                *mediastore.Client
-	Cognitoidentityproviderconn   *cognitoidentityprovider.Client
-	Inspectorconn                 *inspector.Client
-	Cloud9conn                    *cloud9.Client
-	Autoscalingplansconn          *autoscalingplans.Client
-	Codestarnotificationsconn     *codestarnotifications.Client
-	Mqconn                        *mq.Client
-	Mediaconvertconn              *mediaconvert.Client
-	Backupconn                    *backup.Client
-	Kmsconn                       *kms.Client
-	Cognitoidentityconn           *cognitoidentity.Client
-	Dynamodbconn                  *dynamodb.Client
-	Fsxconn                       *fsx.Client
-	Resourcegroupsconn            *resourcegroups.Client
-	Budgetsconn                   *budgets.Client
-	Codestarconnectionsconn       *codestarconnections.Client
-	Daxconn                       *dax.Client
-	Firehoseconn                  *firehose.Client
-	Macieconn                     *macie.Client
-	Mediapackageconn              *mediapackage.Client
-	Swfconn                       *swf.Client
-	Acmconn                       *acm.Client
-	Kinesisanalyticsconn          *kinesisanalytics.Client
-	Sfnconn                       *sfn.Client
-	Kinesisanalyticsv2conn        *kinesisanalyticsv2.Client
-	Eksconn                       *eks.Client
-	Kinesisvideoconn              *kinesisvideo.Client
-	Globalacceleratorconn         *globalaccelerator.Client
-	Cloudwatchconn                *cloudwatch.Client
-	Cloudtrailconn                *cloudtrail.Client
-	Licensemanagerconn            *licensemanager.Client
-	Quicksightconn                *quicksight.Client
-	Devicefarmconn                *devicefarm.Client
-	Cloudhsmv2conn                *cloudhsmv2.Client
-	Elastictranscoderconn         *elastictranscoder.Client
-	S3outpostsconn                *s3outposts.Client
-	Kinesisconn                   *kinesis.Client
+	Storagegatewayconn            *storagegateway.Client
 	Stsconn                       *sts.Client
+	Swfconn                       *swf.Client
+	Syntheticsconn                *synthetics.Client
+	Transferconn                  *transfer.Client
+	Wafconn                       *waf.Client
+	Wafregionalconn               *wafregional.Client
+	Wafv2conn                     *wafv2.Client
+	Worklinkconn                  *worklink.Client
+	Workspacesconn                *workspaces.Client
+	Xrayconn                      *xray.Client
 }
 
 func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) (*Client, error) {
@@ -276,138 +274,137 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 	}
 
 	client := &Client{
-		Iamconn:                       iam.NewFromConfig(cfg),
+		Accessanalyzerconn:            accessanalyzer.NewFromConfig(cfg),
+		Acmconn:                       acm.NewFromConfig(cfg),
+		Acmpcaconn:                    acmpca.NewFromConfig(cfg),
 		Apigatewayconn:                apigateway.NewFromConfig(cfg),
 		Apigatewayv2conn:              apigatewayv2.NewFromConfig(cfg),
-		Elasticloadbalancingconn:      elasticloadbalancing.NewFromConfig(cfg),
-		Cloudfrontconn:                cloudfront.NewFromConfig(cfg),
-		Codecommitconn:                codecommit.NewFromConfig(cfg),
-		Configserviceconn:             configservice.NewFromConfig(cfg),
-		Efsconn:                       efs.NewFromConfig(cfg),
-		Sagemakerconn:                 sagemaker.NewFromConfig(cfg),
-		Sesconn:                       ses.NewFromConfig(cfg),
-		Ec2conn:                       ec2.NewFromConfig(cfg),
-		Wafregionalconn:               wafregional.NewFromConfig(cfg),
 		Applicationautoscalingconn:    applicationautoscaling.NewFromConfig(cfg),
-		Codebuildconn:                 codebuild.NewFromConfig(cfg),
-		Fmsconn:                       fms.NewFromConfig(cfg),
-		Glacierconn:                   glacier.NewFromConfig(cfg),
-		S3conn:                        s3.NewFromConfig(cfg),
-		Lightsailconn:                 lightsail.NewFromConfig(cfg),
-		Docdbconn:                     docdb.NewFromConfig(cfg),
-		Glueconn:                      glue.NewFromConfig(cfg),
-		Opsworksconn:                  opsworks.NewFromConfig(cfg),
-		Servicecatalogconn:            servicecatalog.NewFromConfig(cfg),
-		Sqsconn:                       sqs.NewFromConfig(cfg),
-		Appsyncconn:                   appsync.NewFromConfig(cfg),
-		Codepipelineconn:              codepipeline.NewFromConfig(cfg),
-		Elasticacheconn:               elasticache.NewFromConfig(cfg),
-		Imagebuilderconn:              imagebuilder.NewFromConfig(cfg),
-		Dlmconn:                       dlm.NewFromConfig(cfg),
-		Elasticbeanstalkconn:          elasticbeanstalk.NewFromConfig(cfg),
-		Ecrconn:                       ecr.NewFromConfig(cfg),
-		Ecsconn:                       ecs.NewFromConfig(cfg),
-		Lexmodelbuildingserviceconn:   lexmodelbuildingservice.NewFromConfig(cfg),
-		Autoscalingconn:               autoscaling.NewFromConfig(cfg),
-		Transferconn:                  transfer.NewFromConfig(cfg),
-		Accessanalyzerconn:            accessanalyzer.NewFromConfig(cfg),
-		Securityhubconn:               securityhub.NewFromConfig(cfg),
-		Iotconn:                       iot.NewFromConfig(cfg),
-		Route53resolverconn:           route53resolver.NewFromConfig(cfg),
-		Wafconn:                       waf.NewFromConfig(cfg),
 		Appmeshconn:                   appmesh.NewFromConfig(cfg),
-		Storagegatewayconn:            storagegateway.NewFromConfig(cfg),
-		Shieldconn:                    shield.NewFromConfig(cfg),
-		Rdsconn:                       rds.NewFromConfig(cfg),
-		Elasticsearchserviceconn:      elasticsearchservice.NewFromConfig(cfg),
-		Qldbconn:                      qldb.NewFromConfig(cfg),
-		Ecrpublicconn:                 ecrpublic.NewFromConfig(cfg),
-		Databasemigrationserviceconn:  databasemigrationservice.NewFromConfig(cfg),
-		Route53conn:                   route53.NewFromConfig(cfg),
-		Emrconn:                       emr.NewFromConfig(cfg),
+		Appsyncconn:                   appsync.NewFromConfig(cfg),
 		Athenaconn:                    athena.NewFromConfig(cfg),
+		Autoscalingconn:               autoscaling.NewFromConfig(cfg),
+		Autoscalingplansconn:          autoscalingplans.NewFromConfig(cfg),
+		Backupconn:                    backup.NewFromConfig(cfg),
 		Batchconn:                     batch.NewFromConfig(cfg),
+		Budgetsconn:                   budgets.NewFromConfig(cfg),
+		Cloud9conn:                    cloud9.NewFromConfig(cfg),
+		Cloudformationconn:            cloudformation.NewFromConfig(cfg),
+		Cloudfrontconn:                cloudfront.NewFromConfig(cfg),
+		Cloudhsmv2conn:                cloudhsmv2.NewFromConfig(cfg),
+		Cloudtrailconn:                cloudtrail.NewFromConfig(cfg),
+		Cloudwatchconn:                cloudwatch.NewFromConfig(cfg),
+		Cloudwatcheventsconn:          cloudwatchevents.NewFromConfig(cfg),
 		Cloudwatchlogsconn:            cloudwatchlogs.NewFromConfig(cfg),
+		Codeartifactconn:              codeartifact.NewFromConfig(cfg),
+		Codebuildconn:                 codebuild.NewFromConfig(cfg),
+		Codecommitconn:                codecommit.NewFromConfig(cfg),
 		Codedeployconn:                codedeploy.NewFromConfig(cfg),
-		Guarddutyconn:                 guardduty.NewFromConfig(cfg),
-		Pinpointconn:                  pinpoint.NewFromConfig(cfg),
-		Organizationsconn:             organizations.NewFromConfig(cfg),
+		Codepipelineconn:              codepipeline.NewFromConfig(cfg),
+		Codestarconnectionsconn:       codestarconnections.NewFromConfig(cfg),
+		Codestarnotificationsconn:     codestarnotifications.NewFromConfig(cfg),
+		Cognitoidentityconn:           cognitoidentity.NewFromConfig(cfg),
+		Cognitoidentityproviderconn:   cognitoidentityprovider.NewFromConfig(cfg),
+		Configserviceconn:             configservice.NewFromConfig(cfg),
+		Costandusagereportserviceconn: costandusagereportservice.NewFromConfig(cfg),
+		Databasemigrationserviceconn:  databasemigrationservice.NewFromConfig(cfg),
+		Datapipelineconn:              datapipeline.NewFromConfig(cfg),
+		Datasyncconn:                  datasync.NewFromConfig(cfg),
+		Daxconn:                       dax.NewFromConfig(cfg),
+		Devicefarmconn:                devicefarm.NewFromConfig(cfg),
 		Directconnectconn:             directconnect.NewFromConfig(cfg),
-		S3controlconn:                 s3control.NewFromConfig(cfg),
+		Directoryserviceconn:          directoryservice.NewFromConfig(cfg),
+		Dlmconn:                       dlm.NewFromConfig(cfg),
+		Docdbconn:                     docdb.NewFromConfig(cfg),
+		Dynamodbconn:                  dynamodb.NewFromConfig(cfg),
+		Ec2conn:                       ec2.NewFromConfig(cfg),
+		Ecrconn:                       ecr.NewFromConfig(cfg),
+		Ecrpublicconn:                 ecrpublic.NewFromConfig(cfg),
+		Ecsconn:                       ecs.NewFromConfig(cfg),
+		Efsconn:                       efs.NewFromConfig(cfg),
+		Eksconn:                       eks.NewFromConfig(cfg),
+		Elasticacheconn:               elasticache.NewFromConfig(cfg),
+		Elasticbeanstalkconn:          elasticbeanstalk.NewFromConfig(cfg),
+		Elasticloadbalancingconn:      elasticloadbalancing.NewFromConfig(cfg),
+		Elasticloadbalancingv2conn:    elasticloadbalancingv2.NewFromConfig(cfg),
+		Elasticsearchserviceconn:      elasticsearchservice.NewFromConfig(cfg),
+		Elastictranscoderconn:         elastictranscoder.NewFromConfig(cfg),
+		Emrconn:                       emr.NewFromConfig(cfg),
+		Firehoseconn:                  firehose.NewFromConfig(cfg),
+		Fmsconn:                       fms.NewFromConfig(cfg),
+		Fsxconn:                       fsx.NewFromConfig(cfg),
 		Gameliftconn:                  gamelift.NewFromConfig(cfg),
+		Glacierconn:                   glacier.NewFromConfig(cfg),
+		Globalacceleratorconn:         globalaccelerator.NewFromConfig(cfg),
+		Glueconn:                      glue.NewFromConfig(cfg),
+		Guarddutyconn:                 guardduty.NewFromConfig(cfg),
+		Iamconn:                       iam.NewFromConfig(cfg),
+		Imagebuilderconn:              imagebuilder.NewFromConfig(cfg),
+		Inspectorconn:                 inspector.NewFromConfig(cfg),
+		Iotconn:                       iot.NewFromConfig(cfg),
+		Kafkaconn:                     kafka.NewFromConfig(cfg),
+		Kinesisconn:                   kinesis.NewFromConfig(cfg),
+		Kinesisanalyticsconn:          kinesisanalytics.NewFromConfig(cfg),
+		Kinesisanalyticsv2conn:        kinesisanalyticsv2.NewFromConfig(cfg),
+		Kinesisvideoconn:              kinesisvideo.NewFromConfig(cfg),
+		Kmsconn:                       kms.NewFromConfig(cfg),
+		Lakeformationconn:             lakeformation.NewFromConfig(cfg),
+		Lambdaconn:                    lambda.NewFromConfig(cfg),
+		Lexmodelbuildingserviceconn:   lexmodelbuildingservice.NewFromConfig(cfg),
+		Licensemanagerconn:            licensemanager.NewFromConfig(cfg),
+		Lightsailconn:                 lightsail.NewFromConfig(cfg),
+		Macieconn:                     macie.NewFromConfig(cfg),
+		Mediaconvertconn:              mediaconvert.NewFromConfig(cfg),
+		Mediapackageconn:              mediapackage.NewFromConfig(cfg),
+		Mediastoreconn:                mediastore.NewFromConfig(cfg),
+		Mqconn:                        mq.NewFromConfig(cfg),
+		Neptuneconn:                   neptune.NewFromConfig(cfg),
+		Networkfirewallconn:           networkfirewall.NewFromConfig(cfg),
+		Opsworksconn:                  opsworks.NewFromConfig(cfg),
+		Organizationsconn:             organizations.NewFromConfig(cfg),
+		Pinpointconn:                  pinpoint.NewFromConfig(cfg),
+		Qldbconn:                      qldb.NewFromConfig(cfg),
+		Quicksightconn:                quicksight.NewFromConfig(cfg),
+		Ramconn:                       ram.NewFromConfig(cfg),
+		Rdsconn:                       rds.NewFromConfig(cfg),
+		Redshiftconn:                  redshift.NewFromConfig(cfg),
+		Resourcegroupsconn:            resourcegroups.NewFromConfig(cfg),
+		Route53conn:                   route53.NewFromConfig(cfg),
+		Route53resolverconn:           route53resolver.NewFromConfig(cfg),
+		S3conn:                        s3.NewFromConfig(cfg),
+		S3controlconn:                 s3control.NewFromConfig(cfg),
+		S3outpostsconn:                s3outposts.NewFromConfig(cfg),
+		Sagemakerconn:                 sagemaker.NewFromConfig(cfg),
+		Secretsmanagerconn:            secretsmanager.NewFromConfig(cfg),
+		Securityhubconn:               securityhub.NewFromConfig(cfg),
+		Servicecatalogconn:            servicecatalog.NewFromConfig(cfg),
+		Servicediscoveryconn:          servicediscovery.NewFromConfig(cfg),
+		Servicequotasconn:             servicequotas.NewFromConfig(cfg),
+		Sesconn:                       ses.NewFromConfig(cfg),
+		Sfnconn:                       sfn.NewFromConfig(cfg),
+		Shieldconn:                    shield.NewFromConfig(cfg),
+		Signerconn:                    signer.NewFromConfig(cfg),
+		Snsconn:                       sns.NewFromConfig(cfg),
+		Sqsconn:                       sqs.NewFromConfig(cfg),
 		Ssmconn:                       ssm.NewFromConfig(cfg),
 		Ssoadminconn:                  ssoadmin.NewFromConfig(cfg),
-		Wafv2conn:                     wafv2.NewFromConfig(cfg),
-		Codeartifactconn:              codeartifact.NewFromConfig(cfg),
-		Elasticloadbalancingv2conn:    elasticloadbalancingv2.NewFromConfig(cfg),
-		Networkfirewallconn:           networkfirewall.NewFromConfig(cfg),
-		Cloudwatcheventsconn:          cloudwatchevents.NewFromConfig(cfg),
-		Redshiftconn:                  redshift.NewFromConfig(cfg),
-		Signerconn:                    signer.NewFromConfig(cfg),
-		Acmpcaconn:                    acmpca.NewFromConfig(cfg),
-		Datapipelineconn:              datapipeline.NewFromConfig(cfg),
-		Syntheticsconn:                synthetics.NewFromConfig(cfg),
-		Workspacesconn:                workspaces.NewFromConfig(cfg),
-		Servicediscoveryconn:          servicediscovery.NewFromConfig(cfg),
-		Lambdaconn:                    lambda.NewFromConfig(cfg),
-		Cloudformationconn:            cloudformation.NewFromConfig(cfg),
-		Lakeformationconn:             lakeformation.NewFromConfig(cfg),
-		Kafkaconn:                     kafka.NewFromConfig(cfg),
-		Secretsmanagerconn:            secretsmanager.NewFromConfig(cfg),
-		Datasyncconn:                  datasync.NewFromConfig(cfg),
-		Ramconn:                       ram.NewFromConfig(cfg),
-		Neptuneconn:                   neptune.NewFromConfig(cfg),
-		Servicequotasconn:             servicequotas.NewFromConfig(cfg),
-		Costandusagereportserviceconn: costandusagereportservice.NewFromConfig(cfg),
-		Directoryserviceconn:          directoryservice.NewFromConfig(cfg),
-		Worklinkconn:                  worklink.NewFromConfig(cfg),
-		Snsconn:                       sns.NewFromConfig(cfg),
-		Xrayconn:                      xray.NewFromConfig(cfg),
-		Mediastoreconn:                mediastore.NewFromConfig(cfg),
-		Cognitoidentityproviderconn:   cognitoidentityprovider.NewFromConfig(cfg),
-		Inspectorconn:                 inspector.NewFromConfig(cfg),
-		Cloud9conn:                    cloud9.NewFromConfig(cfg),
-		Autoscalingplansconn:          autoscalingplans.NewFromConfig(cfg),
-		Codestarnotificationsconn:     codestarnotifications.NewFromConfig(cfg),
-		Mqconn:                        mq.NewFromConfig(cfg),
-		Mediaconvertconn:              mediaconvert.NewFromConfig(cfg),
-		Backupconn:                    backup.NewFromConfig(cfg),
-		Kmsconn:                       kms.NewFromConfig(cfg),
-		Cognitoidentityconn:           cognitoidentity.NewFromConfig(cfg),
-		Dynamodbconn:                  dynamodb.NewFromConfig(cfg),
-		Fsxconn:                       fsx.NewFromConfig(cfg),
-		Resourcegroupsconn:            resourcegroups.NewFromConfig(cfg),
-		Budgetsconn:                   budgets.NewFromConfig(cfg),
-		Codestarconnectionsconn:       codestarconnections.NewFromConfig(cfg),
-		Daxconn:                       dax.NewFromConfig(cfg),
-		Firehoseconn:                  firehose.NewFromConfig(cfg),
-		Macieconn:                     macie.NewFromConfig(cfg),
-		Mediapackageconn:              mediapackage.NewFromConfig(cfg),
-		Swfconn:                       swf.NewFromConfig(cfg),
-		Acmconn:                       acm.NewFromConfig(cfg),
-		Kinesisanalyticsconn:          kinesisanalytics.NewFromConfig(cfg),
-		Sfnconn:                       sfn.NewFromConfig(cfg),
-		Kinesisanalyticsv2conn:        kinesisanalyticsv2.NewFromConfig(cfg),
-		Eksconn:                       eks.NewFromConfig(cfg),
-		Kinesisvideoconn:              kinesisvideo.NewFromConfig(cfg),
-		Globalacceleratorconn:         globalaccelerator.NewFromConfig(cfg),
-		Cloudwatchconn:                cloudwatch.NewFromConfig(cfg),
-		Cloudtrailconn:                cloudtrail.NewFromConfig(cfg),
-		Licensemanagerconn:            licensemanager.NewFromConfig(cfg),
-		Quicksightconn:                quicksight.NewFromConfig(cfg),
-		Devicefarmconn:                devicefarm.NewFromConfig(cfg),
-		Cloudhsmv2conn:                cloudhsmv2.NewFromConfig(cfg),
-		Elastictranscoderconn:         elastictranscoder.NewFromConfig(cfg),
-		S3outpostsconn:                s3outposts.NewFromConfig(cfg),
-		Kinesisconn:                   kinesis.NewFromConfig(cfg),
+		Storagegatewayconn:            storagegateway.NewFromConfig(cfg),
 		Stsconn:                       sts.NewFromConfig(cfg),
+		Swfconn:                       swf.NewFromConfig(cfg),
+		Syntheticsconn:                synthetics.NewFromConfig(cfg),
+		Transferconn:                  transfer.NewFromConfig(cfg),
+		Wafconn:                       waf.NewFromConfig(cfg),
+		Wafregionalconn:               wafregional.NewFromConfig(cfg),
+		Wafv2conn:                     wafv2.NewFromConfig(cfg),
+		Worklinkconn:                  worklink.NewFromConfig(cfg),
+		Workspacesconn:                workspaces.NewFromConfig(cfg),
+		Xrayconn:                      xray.NewFromConfig(cfg),
 	}
 
 	client.Region = cfg.Region
 
 	log.WithFields(log.Fields{
 		"region": cfg.Region,
-		"time":   time.Now().Format("04:05.000"),
 	}).Debugf("created new instance of AWS client")
 
 	return client, nil
@@ -417,7 +414,6 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 func (client *Client) SetAccountID(ctx context.Context) error {
 	resp, err := client.Stsconn.GetCallerIdentity(ctx, &sts.GetCallerIdentityInput{})
 	if err != nil {
-		fmt.Printf("%T", err.Error())
 		return errors.Wrap(err, "failed to get caller identity")
 	}
 
