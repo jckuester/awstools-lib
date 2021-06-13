@@ -6,6 +6,7 @@ require (
 	github.com/apex/log v1.9.0
 	github.com/aws/aws-sdk-go v1.38.43
 	github.com/aws/aws-sdk-go-v2/config v1.1.1
+	github.com/aws/aws-sdk-go-v2/internal/ini v1.0.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/accessanalyzer v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/acm v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/acmpca v1.1.1
@@ -13,6 +14,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/apigatewayv2 v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/applicationautoscaling v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/appmesh v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/apprunner v1.0.0
 	github.com/aws/aws-sdk-go-v2/service/appsync v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/athena v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.1.1
@@ -86,10 +88,12 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/licensemanager v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/lightsail v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/macie v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/macie2 v1.7.0
 	github.com/aws/aws-sdk-go-v2/service/mediaconvert v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/mediapackage v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/mediastore v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/mq v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/mwaa v1.2.0
 	github.com/aws/aws-sdk-go-v2/service/neptune v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/networkfirewall v1.1.2
 	github.com/aws/aws-sdk-go-v2/service/opsworks v1.1.1
@@ -124,6 +128,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/swf v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/synthetics v1.1.1
+	github.com/aws/aws-sdk-go-v2/service/timestreamwrite v1.2.1
 	github.com/aws/aws-sdk-go-v2/service/transfer v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/waf v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/wafregional v1.1.1
