@@ -70,8 +70,11 @@ func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, i
 					"access_key":                  cty.UnknownVal(cty.DynamicPseudoType),
 					"allowed_account_ids":         cty.UnknownVal(cty.DynamicPseudoType),
 					"assume_role":                 cty.UnknownVal(cty.DynamicPseudoType),
+					"default_tags":                cty.UnknownVal(cty.DynamicPseudoType),
 					"endpoints":                   cty.UnknownVal(cty.DynamicPseudoType),
 					"forbidden_account_ids":       cty.UnknownVal(cty.DynamicPseudoType),
+					"ignore_tag_prefixes":         cty.UnknownVal(cty.DynamicPseudoType),
+					"ignore_tags":                 cty.UnknownVal(cty.DynamicPseudoType),
 					"insecure":                    cty.UnknownVal(cty.DynamicPseudoType),
 					"max_retries":                 cty.UnknownVal(cty.DynamicPseudoType),
 					"s3_force_path_style":         cty.UnknownVal(cty.DynamicPseudoType),
@@ -83,8 +86,6 @@ func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, i
 					"skip_region_validation":      cty.UnknownVal(cty.DynamicPseudoType),
 					"skip_requesting_account_id":  cty.UnknownVal(cty.DynamicPseudoType),
 					"token":                       cty.UnknownVal(cty.DynamicPseudoType),
-					"ignore_tag_prefixes":         cty.UnknownVal(cty.DynamicPseudoType),
-					"ignore_tags":                 cty.UnknownVal(cty.DynamicPseudoType),
 				})
 
 				err = pr.Configure(config)

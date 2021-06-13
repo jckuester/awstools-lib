@@ -4,7 +4,7 @@ go 1.15
 
 require (
 	github.com/apex/log v1.9.0
-	github.com/aws/aws-sdk-go v1.35.28
+	github.com/aws/aws-sdk-go v1.38.43
 	github.com/aws/aws-sdk-go-v2/config v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/accessanalyzer v1.1.1
 	github.com/aws/aws-sdk-go-v2/service/acm v1.1.1
@@ -133,7 +133,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/xray v1.1.1
 	github.com/fatih/color v1.10.0
 	github.com/jckuester/awsls v0.8.3
-	github.com/jckuester/terradozer v0.1.3
+	github.com/jckuester/terradozer v0.1.4-0.20210524132110-395dc12d3bf5
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
 	github.com/zclconf/go-cty v1.7.1

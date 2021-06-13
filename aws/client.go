@@ -15,6 +15,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/apigatewayv2"
 	"github.com/aws/aws-sdk-go-v2/service/applicationautoscaling"
 	"github.com/aws/aws-sdk-go-v2/service/appmesh"
+	"github.com/aws/aws-sdk-go-v2/service/apprunner"
 	"github.com/aws/aws-sdk-go-v2/service/appsync"
 	"github.com/aws/aws-sdk-go-v2/service/athena"
 	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
@@ -88,10 +89,12 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/licensemanager"
 	"github.com/aws/aws-sdk-go-v2/service/lightsail"
 	"github.com/aws/aws-sdk-go-v2/service/macie"
+	"github.com/aws/aws-sdk-go-v2/service/macie2"
 	"github.com/aws/aws-sdk-go-v2/service/mediaconvert"
 	"github.com/aws/aws-sdk-go-v2/service/mediapackage"
 	"github.com/aws/aws-sdk-go-v2/service/mediastore"
 	"github.com/aws/aws-sdk-go-v2/service/mq"
+	"github.com/aws/aws-sdk-go-v2/service/mwaa"
 	"github.com/aws/aws-sdk-go-v2/service/neptune"
 	"github.com/aws/aws-sdk-go-v2/service/networkfirewall"
 	"github.com/aws/aws-sdk-go-v2/service/opsworks"
@@ -126,6 +129,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sts"
 	"github.com/aws/aws-sdk-go-v2/service/swf"
 	"github.com/aws/aws-sdk-go-v2/service/synthetics"
+	"github.com/aws/aws-sdk-go-v2/service/timestreamwrite"
 	"github.com/aws/aws-sdk-go-v2/service/transfer"
 	"github.com/aws/aws-sdk-go-v2/service/waf"
 	"github.com/aws/aws-sdk-go-v2/service/wafregional"
@@ -147,6 +151,7 @@ type Client struct {
 	Apigatewayv2conn              *apigatewayv2.Client
 	Applicationautoscalingconn    *applicationautoscaling.Client
 	Appmeshconn                   *appmesh.Client
+	Apprunnerconn                 *apprunner.Client
 	Appsyncconn                   *appsync.Client
 	Athenaconn                    *athena.Client
 	Autoscalingconn               *autoscaling.Client
@@ -220,10 +225,12 @@ type Client struct {
 	Licensemanagerconn            *licensemanager.Client
 	Lightsailconn                 *lightsail.Client
 	Macieconn                     *macie.Client
+	Macie2conn                    *macie2.Client
 	Mediaconvertconn              *mediaconvert.Client
 	Mediapackageconn              *mediapackage.Client
 	Mediastoreconn                *mediastore.Client
 	Mqconn                        *mq.Client
+	Mwaaconn                      *mwaa.Client
 	Neptuneconn                   *neptune.Client
 	Networkfirewallconn           *networkfirewall.Client
 	Opsworksconn                  *opsworks.Client
@@ -258,6 +265,7 @@ type Client struct {
 	Stsconn                       *sts.Client
 	Swfconn                       *swf.Client
 	Syntheticsconn                *synthetics.Client
+	Timestreamwriteconn           *timestreamwrite.Client
 	Transferconn                  *transfer.Client
 	Wafconn                       *waf.Client
 	Wafregionalconn               *wafregional.Client
@@ -281,6 +289,7 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Apigatewayv2conn:              apigatewayv2.NewFromConfig(cfg),
 		Applicationautoscalingconn:    applicationautoscaling.NewFromConfig(cfg),
 		Appmeshconn:                   appmesh.NewFromConfig(cfg),
+		Apprunnerconn:                 apprunner.NewFromConfig(cfg),
 		Appsyncconn:                   appsync.NewFromConfig(cfg),
 		Athenaconn:                    athena.NewFromConfig(cfg),
 		Autoscalingconn:               autoscaling.NewFromConfig(cfg),
@@ -354,10 +363,12 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Licensemanagerconn:            licensemanager.NewFromConfig(cfg),
 		Lightsailconn:                 lightsail.NewFromConfig(cfg),
 		Macieconn:                     macie.NewFromConfig(cfg),
+		Macie2conn:                    macie2.NewFromConfig(cfg),
 		Mediaconvertconn:              mediaconvert.NewFromConfig(cfg),
 		Mediapackageconn:              mediapackage.NewFromConfig(cfg),
 		Mediastoreconn:                mediastore.NewFromConfig(cfg),
 		Mqconn:                        mq.NewFromConfig(cfg),
+		Mwaaconn:                      mwaa.NewFromConfig(cfg),
 		Neptuneconn:                   neptune.NewFromConfig(cfg),
 		Networkfirewallconn:           networkfirewall.NewFromConfig(cfg),
 		Opsworksconn:                  opsworks.NewFromConfig(cfg),
@@ -392,6 +403,7 @@ func NewClient(ctx context.Context, configs ...func(*config.LoadOptions) error) 
 		Stsconn:                       sts.NewFromConfig(cfg),
 		Swfconn:                       swf.NewFromConfig(cfg),
 		Syntheticsconn:                synthetics.NewFromConfig(cfg),
+		Timestreamwriteconn:           timestreamwrite.NewFromConfig(cfg),
 		Transferconn:                  transfer.NewFromConfig(cfg),
 		Wafconn:                       waf.NewFromConfig(cfg),
 		Wafregionalconn:               wafregional.NewFromConfig(cfg),
