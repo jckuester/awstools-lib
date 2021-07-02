@@ -39,14 +39,14 @@ func TestInstall_Cache(t *testing.T) {
 			name:             "version without prefix",
 			providerName:     "aws",
 			constraint:       "2.43.0",
-			expectedFile:     ".terradozer/terraform-provider-aws_v2.43.0_x4",
+			expectedFile:     fmt.Sprintf("%s/terraform-provider-aws_v2.43.0_x4", testInstallDir),
 			expectedChecksum: "d8a5e7969884c03cecbfd64fb3add8c542c918c5a8c259d1b31fadbbee284fb7",
 		},
 		{
 			name:             "version prefixed with v",
 			providerName:     "aws",
 			constraint:       "v2.43.0",
-			expectedFile:     ".terradozer/terraform-provider-aws_v2.43.0_x4",
+			expectedFile:     fmt.Sprintf("%s/terraform-provider-aws_v2.43.0_x4", testInstallDir),
 			expectedChecksum: "d8a5e7969884c03cecbfd64fb3add8c542c918c5a8c259d1b31fadbbee284fb7",
 		},
 	}
@@ -104,8 +104,8 @@ func TestInstall_PurgeOldVersions(t *testing.T) {
 			providerName:    "aws",
 			constraintOld:   "2.43.0",
 			constraint:      "2.68.0",
-			expectedFileOld: ".terradozer/terraform-provider-aws_v2.43.0_x4",
-			expectedFile:    ".terradozer/terraform-provider-aws_v2.68.0_x4",
+			expectedFileOld: fmt.Sprintf("%s/terraform-provider-aws_v2.43.0_x4", testInstallDir),
+			expectedFile:    fmt.Sprintf("%s/terraform-provider-aws_v2.68.0_x4", testInstallDir),
 		},
 	}
 	for _, tc := range tests {
@@ -149,18 +149,26 @@ func TestTerraformProvider_ImportResource(t *testing.T) {
 		t.Skip("Skipping integration test.")
 	}
 
-	env := test.InitEnv(t)
+	env := test.Init(t)
+
+	err := test.SetMultiEnvs(map[string]string{
+		"AWS_PROFILE": env.AWSProfile1,
+		"AWS_REGION":  env.AWSRegion1,
+	})
+	require.NoError(t, err)
+
+	defer test.UnsetAWSEnvs()
 
 	terraformDir := "../../test/test-fixtures/single-resource/aws-vpc"
 
-	terraformOptions := test.GetTerraformOptions(terraformDir, env)
+	terraformOptions := test.GetTerraformOptions(test.TfStateBucket, terraformDir, env)
 
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
 
 	actualVpcID := terraform.Output(t, terraformOptions, "vpc_id")
-	aws.GetVpcById(t, actualVpcID, env.AWSRegion)
+	aws.GetVpcById(t, actualVpcID, env.AWSRegion1)
 
 	provider, err := provider.Init("aws", testInstallDir, 15)
 	require.NoError(t, err)
@@ -197,18 +205,26 @@ func TestTerraformProvider_ReadResource(t *testing.T) {
 		t.Skip("Skipping integration test.")
 	}
 
-	env := test.InitEnv(t)
+	env := test.Init(t)
+
+	err := test.SetMultiEnvs(map[string]string{
+		"AWS_PROFILE": env.AWSProfile1,
+		"AWS_REGION":  env.AWSRegion1,
+	})
+	require.NoError(t, err)
+
+	defer test.UnsetAWSEnvs()
 
 	terraformDir := "../../test/test-fixtures/single-resource/aws-vpc"
 
-	terraformOptions := test.GetTerraformOptions(terraformDir, env)
+	terraformOptions := test.GetTerraformOptions(test.TfStateBucket, terraformDir, env)
 
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
 
 	actualVpcID := terraform.Output(t, terraformOptions, "vpc_id")
-	aws.GetVpcById(t, actualVpcID, env.AWSRegion)
+	aws.GetVpcById(t, actualVpcID, env.AWSRegion1)
 
 	p, err := provider.Init("aws", testInstallDir, 15)
 	require.NoError(t, err)
@@ -273,6 +289,16 @@ func TestInitProviders(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
+			env := test.Init(t)
+
+			err := test.SetMultiEnvs(map[string]string{
+				"AWS_PROFILE": env.AWSProfile1,
+				"AWS_REGION":  env.AWSRegion1,
+			})
+			require.NoError(t, err)
+
+			defer test.UnsetAWSEnvs()
+
 			actualProviders, err := provider.InitProviders(tc.providerNames, testInstallDir, 15)
 
 			if tc.expectedErrMsg != "" {

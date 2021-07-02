@@ -31,7 +31,7 @@ func awsProviderConfig() cty.Value {
 		"insecure":                    cty.UnknownVal(cty.DynamicPseudoType),
 		"max_retries":                 cty.UnknownVal(cty.DynamicPseudoType),
 		"profile":                     cty.StringVal(os.Getenv("AWS_PROFILE")),
-		"region":                      cty.StringVal(os.Getenv("AWS_DEFAULT_REGION")),
+		"region":                      cty.StringVal(os.Getenv("AWS_REGION")),
 		"s3_force_path_style":         cty.UnknownVal(cty.DynamicPseudoType),
 		"secret_key":                  cty.StringVal(os.Getenv("AWS_SECRET_ACCESS_KEY")),
 		"shared_credentials_file":     cty.StringVal(os.Getenv("AWS_SHARED_CREDENTIALS_FILE")),
