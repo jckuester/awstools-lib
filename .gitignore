@@ -1,0 +1,6 @@
+*.backup
+*.tfstate
+.terraform/
+bin/
+coverage.txt
+dist/
