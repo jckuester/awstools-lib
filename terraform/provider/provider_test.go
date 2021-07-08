@@ -19,7 +19,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-const testInstallDir = ".test-install-dir"
+const testInstallDir = "./.test-install-dir"
 
 func TestInstall_Cache(t *testing.T) {
 	if testing.Short() {
@@ -177,8 +177,8 @@ func TestTerraformProvider_ImportResource(t *testing.T) {
 	require.NoError(t, err)
 	assert.Len(t, importedResources, 1)
 
-	assert.Equal(t, importedResources[0].TypeName, "aws_vpc")
-	assert.Equal(t, importedResources[0].State, cty.ObjectVal(map[string]cty.Value{
+	assert.Equal(t, "aws_vpc", importedResources[0].TypeName)
+	assert.Equal(t, cty.ObjectVal(map[string]cty.Value{
 		"arn":                              cty.NullVal(cty.String),
 		"assign_generated_ipv6_cidr_block": cty.False,
 		"cidr_block":                       cty.NullVal(cty.String),
@@ -197,7 +197,8 @@ func TestTerraformProvider_ImportResource(t *testing.T) {
 		"main_route_table_id":              cty.NullVal(cty.String),
 		"owner_id":                         cty.NullVal(cty.String),
 		"tags":                             cty.NullVal(cty.Map(cty.String)),
-	}))
+		"tags_all":                         cty.NullVal(cty.Map(cty.String)),
+	}), importedResources[0].State)
 }
 
 func TestTerraformProvider_ReadResource(t *testing.T) {
@@ -249,15 +250,15 @@ func TestTerraformProvider_ReadResource(t *testing.T) {
 			"main_route_table_id":              cty.NullVal(cty.String),
 			"owner_id":                         cty.NullVal(cty.String),
 			"tags":                             cty.NullVal(cty.Map(cty.String)),
+			"tags_all":                         cty.NullVal(cty.Map(cty.String)),
 		}))
 
 	require.NoError(t, err)
 
-	assert.Equal(t, currentResourceState.GetAttr("tags"),
-		cty.MapVal(map[string]cty.Value{
-			"Name":       cty.StringVal(terraformOptions.Vars["name"].(string)),
-			"terradozer": cty.StringVal("test-acc"),
-		}))
+	assert.Equal(t, cty.MapVal(map[string]cty.Value{
+		"Name":         cty.StringVal(terraformOptions.Vars["name"].(string)),
+		"awstools-lib": cty.StringVal("test-acc"),
+	}), currentResourceState.GetAttr("tags"))
 
 	assert.Equal(t, currentResourceState.GetAttr("cidr_block"),
 		cty.StringVal("10.0.0.0/16"))

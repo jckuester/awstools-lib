@@ -16,6 +16,6 @@ resource "aws_vpc" "test" {
 
   tags = {
     Name       = var.name
-    terradozer = "test-acc"
+    awstools-lib = "test-acc"
   }
 }

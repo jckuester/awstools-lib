@@ -10,7 +10,7 @@ import (
 	"github.com/apex/log"
 	"github.com/fatih/color"
 	"github.com/jckuester/awstools-lib/aws"
-	"github.com/jckuester/terradozer/pkg/provider"
+	"github.com/jckuester/awstools-lib/terraform/provider"
 	"github.com/zclconf/go-cty/cty"
 )
 
