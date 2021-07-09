@@ -538,9 +538,12 @@ github.com/jckuester/awsls v0.8.3 h1:Q8JKcgKCOYg2ZM5qIqXbA0gBUOR82zQ1YMKtBKzaktk
 github.com/jckuester/awsls v0.8.3/go.mod h1:U0clHlW/c05kB1Cb4qO5pwGjxtR1CeHpgUzHhhI93CE=
 github.com/jckuester/awstools-lib v0.0.0-20210215194522-14607cce3470/go.mod h1:71+ozVxBDbhfKZH5ybJVxWo+mO1SVfpGiLfwXU5qD/w=
 github.com/jckuester/awstools-lib v0.0.0-20210220131009-cbbff634aac8/go.mod h1:VnXw3pHiRaNKPzypiBk+814DUarSyNBExo5D4y77G7o=
+github.com/jckuester/awstools-lib v0.0.0-20210708105939-54c0edede8d3/go.mod h1:2tJLCfSvTBzdkgiwr+jzhvBgwup9tVry7wZ/EIEVzOM=
 github.com/jckuester/terradozer v0.1.3/go.mod h1:ER3EJojZmO2u6lfcdgnmC+Nrg/TV2T2bacY5FZpqgks=
 github.com/jckuester/terradozer v0.1.4-0.20210524132110-395dc12d3bf5 h1:waL8vMOyjcL/AfaEHHOyTBa/RKTPl4v+nRvrRdZDe74=
 github.com/jckuester/terradozer v0.1.4-0.20210524132110-395dc12d3bf5/go.mod h1:KqjvtGWVGzRw5yFdbcO9c74s5hlKjU6IMqfFd7PhOr4=
+github.com/jckuester/terradozer v0.1.4-0.20210709074851-c5786b1d542a h1:3Pqpn0uyK0USxGP6FGibPcXoOBzvtLCj7+2KJzWS+TA=
+github.com/jckuester/terradozer v0.1.4-0.20210709074851-c5786b1d542a/go.mod h1:qg/z1DTvZ1ezIrC0jSkIgeeAdr/l10kyG+fpEYDhK7k=
 github.com/jhump/protoreflect v1.6.0 h1:h5jfMVslIg6l29nsMs0D8Wj17RDVdNYti0vDN/PZZoE=
 github.com/jhump/protoreflect v1.6.0/go.mod h1:eaTn3RZAmMBcV0fifFvlm6VHNz3wSkYyXYWUh7ymB74=
 github.com/jmespath/go-jmespath v0.0.0-20160202185014-0b12d6b521d8/go.mod h1:Nht3zPeWKUH0NzdCt2Blrr5ys8VGpn0CEB0cQHVjt7k=

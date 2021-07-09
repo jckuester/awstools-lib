@@ -142,7 +142,7 @@ require (
 	github.com/hashicorp/go-plugin v1.3.0
 	github.com/hashicorp/terraform v0.12.31
 	github.com/jckuester/awsls v0.8.3
-	github.com/jckuester/terradozer v0.1.4-0.20210524132110-395dc12d3bf5
+	github.com/jckuester/terradozer v0.1.4-0.20210709074851-c5786b1d542a
 	github.com/mitchellh/cli v1.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
