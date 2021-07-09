@@ -351,6 +351,8 @@ func Init(providerName string, installDir string, timeout time.Duration) (*Terra
 
 	err = p.Configure(pConfig)
 	if err != nil {
+		p.Close()
+
 		return nil, fmt.Errorf("failed to configure provider (name=%s, version=%s): %s",
 			metaPlugin.Name, metaPlugin.Version, err)
 	}

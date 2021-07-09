@@ -11,14 +11,16 @@ import (
 func config(name string) (cty.Value, string, error) {
 	switch name {
 	case "aws":
-		return awsProviderConfig(), "v3.42.0", nil
+		return AwsProviderConfig(
+			os.Getenv("AWS_PROFILE"),
+			os.Getenv("AWS_REGION")), "v3.42.0", nil
 	default:
 		return cty.NilVal, "", fmt.Errorf("provider config not found: %s", name)
 	}
 }
 
-// awsProviderConfig returns a default configuration for the Terraform AWS Provider.
-func awsProviderConfig() cty.Value {
+// AwsProviderConfig returns a configuration for the Terraform AWS Provider.
+func AwsProviderConfig(profile string, region string) cty.Value {
 	return cty.ObjectVal(map[string]cty.Value{
 		"access_key":                  cty.StringVal(os.Getenv("AWS_ACCESS_KEY_ID")),
 		"allowed_account_ids":         cty.UnknownVal(cty.DynamicPseudoType),
@@ -30,8 +32,8 @@ func awsProviderConfig() cty.Value {
 		"ignore_tags":                 cty.UnknownVal(cty.DynamicPseudoType),
 		"insecure":                    cty.UnknownVal(cty.DynamicPseudoType),
 		"max_retries":                 cty.UnknownVal(cty.DynamicPseudoType),
-		"profile":                     cty.StringVal(os.Getenv("AWS_PROFILE")),
-		"region":                      cty.StringVal(os.Getenv("AWS_REGION")),
+		"profile":                     cty.StringVal(profile),
+		"region":                      cty.StringVal(region),
 		"s3_force_path_style":         cty.UnknownVal(cty.DynamicPseudoType),
 		"secret_key":                  cty.StringVal(os.Getenv("AWS_SECRET_ACCESS_KEY")),
 		"shared_credentials_file":     cty.StringVal(os.Getenv("AWS_SHARED_CREDENTIALS_FILE")),
