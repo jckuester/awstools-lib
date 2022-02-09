@@ -2,7 +2,7 @@
 
 //go:generate go run -tags codegen generate.go
 //go:generate gofmt -s -w ../aws ../terraform
-//go:generate goimports -w ../aws ../terraform
+//go:generate goimports -w ../aws ../terraform//go:generate mockgen -source=../terraform/update.go -destination=../terraform/update_mock_test.go -package=terraform_test
 
 package main
 

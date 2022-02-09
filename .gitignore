@@ -1,3 +1,4 @@
+*_mock_test.go
 *.backup
 *.tfstate
 .terraform/
