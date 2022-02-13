@@ -22,6 +22,7 @@ type providerPoolThreadSafe struct {
 
 // NewProviderPool launches a set of Terraform AWS Providers with the configuration of the given clientKeys
 // (combination of AWS profile and region).
+// Providers are launched only once in case of duplicate clientKeys.
 func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, installDir string,
 	timeout time.Duration) (
 	map[aws.ClientKey]provider.TerraformProvider, error) {
@@ -39,6 +40,8 @@ func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, i
 	providerPool := &providerPoolThreadSafe{
 		providers: make(map[aws.ClientKey]provider.TerraformProvider),
 	}
+
+	clientKeys = removeDuplicateClientKeys(clientKeys)
 
 	if len(clientKeys) > 0 {
 		wg.Add(len(clientKeys))
@@ -129,4 +132,18 @@ func NewProviderPool(ctx context.Context, clientKeys []aws.ClientKey, version, i
 	}
 
 	return providerPool.providers, nil
+}
+
+func removeDuplicateClientKeys(clientKeys []aws.ClientKey) []aws.ClientKey {
+	seen := make(map[aws.ClientKey]bool)
+	var result []aws.ClientKey
+
+	for _, clientKey := range clientKeys {
+		if _, ok := seen[clientKey]; !ok {
+			seen[clientKey] = true
+			result = append(result, clientKey)
+		}
+	}
+
+	return result
 }
